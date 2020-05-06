@@ -16,12 +16,12 @@
     <v-flex lg12 md12>
       <div class="headline">
         <!--v-icon color="black">mdi-clipboard-check</v-icon-->
-        Reporte de proximos servicios
+        REPORTE ESTATUS ORDEN DE SERVICIO (O.S.)/PRÓXIMOS SERVICIOS
         <hr class="my-3">
       </div>
       <div class="headline">
         <!--v-icon color="black">mdi-clipboard-check</v-icon-->
-        Reporte de proximos servicios
+        REPORTE ESTATUS ORDEN DE SERVICIO (O.S.)/PRÓXIMOS SERVICIOS
         <hr class="my-3">
       </div>
       <!-- page-->
@@ -34,11 +34,24 @@
               :options="selectSucursal"
               @change="ChangeProyecto"
               placeholder="Proyecto"
-              multiple
+              
             ></v-select>
           </div>
-        </v-flex>
+        </v-flex>  
+        
         <v-flex xs2>
+          <div style="margin-left: 3%; margin-top: 7%; width:300px">
+            <v-select
+              label="estastus_nombre"
+              v-model="modelSelectEstatico"
+              :options="selectEstatus"
+              @change="ChangeEstatus"
+              placeholder="Estatus"
+              
+            ></v-select>
+          </div>
+        </v-flex>   
+        <!--<v-flex xs2>
           <div style="margin-left: 3%; margin-top: 7%;">
             <v-select
               label="tipovehiculo_nombre"
@@ -61,23 +74,23 @@
               multiple
             ></v-select>
           </div>
-        </v-flex>
+        </v-flex>-->
         <v-flex xs2 style="max-width: 100px;">
-          <div style="margin-left: 7%; margin-top: 14%;">
+          <div style="margin-left: 110%; margin-top: 14%; width:200px">
             <v-btn @click="excel" small dark color="green">
-              <v-icon>mdi-file-excel</v-icon> EXCEL
+              <v-icon>mdi-file-excel</v-icon> PREVISIÓN
             </v-btn>
           </div>
         </v-flex>
         <v-flex xs2 style="max-width: 100px;">
-          <div style="margin-left: 7%; margin-top: 14%;">
+          <div style="margin-left: 135%; margin-top: 14%;">
             <v-btn @click="pdf" small dark color="green">
               <v-icon>mdi-file-pdf-box</v-icon> PDF
             </v-btn>
           </div>
         </v-flex>
         <v-flex xs2>
-          <div style="margin-left: 3%; margin-top: 7%;">
+          <div style="margin-left: 55%; margin-top: 7%;">
             <v-btn small color="primary" @click="getGraficaDetalle">
               <v-icon>mdi-magnify</v-icon> Buscar
             </v-btn>
@@ -88,12 +101,13 @@
           <v-row class="fill-height">
             <v-col>
             <v-col xs12 sm12 md2>
-            <v-icon color="cyan">mdi-brightness-1</v-icon> Programado
-            <v-icon color="yellow">mdi-brightness-1</v-icon> En Proceso
-            <v-icon color="red lighten-1">mdi-brightness-1</v-icon> Pasado de Fecha
-            <v-icon color="green">mdi-brightness-1</v-icon> En tiempo y Forma
+            <v-icon color="cyan">mdi-brightness-1</v-icon> O.S. Programada
+            <v-icon color="yellow">mdi-brightness-1</v-icon> O.S. En Proceso (En Tiempo)
+            <v-icon color="orange">mdi-brightness-1</v-icon> O.S. En Proceso (Con Retraso)
+            <v-icon color="red lighten-1">mdi-brightness-1</v-icon> O.S. Pasada de Fecha
+            <v-icon color="green">mdi-brightness-1</v-icon> O.S. Finalizado (En Tiempo y Forma)
             </v-col>
-              <v-sheet height="64">
+              <v-sheet height="70">
                 <v-toolbar flat color="white">
                   <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
                     Hoy
@@ -116,7 +130,8 @@
                         <v-icon right>mdi-menu-down</v-icon>
                       </v-btn>
                     </template>
-                    <v-list>
+                    <v-list style="background-color: white;"
+                    >
                       <v-list-item @click="type = 'day'">
                         <v-list-item-title>Día</v-list-item-title>
                       </v-list-item>
@@ -146,7 +161,8 @@
                   @click:more="viewDay"
                   @click:date="viewDay"
                   @change="updateRange"
-                  locale="esp"
+                  locale="es"
+                   
                 ></v-calendar>
                 <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
                   <v-card color="grey lighten-4" min-width="350px" flat>
@@ -216,13 +232,17 @@ export default {
   },
   data () {
     return {
+      informaciondummy: [],
+      ReporteExcel: [],
       title_Page: 'Reportes',
       modelSelectMante: [],
       dataSelectMante: [],
       modelSelectTMant: [],
       dataSelectTMant: [],
       modelSelect: [],
+      modelSelectEstatico:[],
       selectSucursal: [],
+      selectEstatus:[],
       modelSelectTMmnto: [],
       dataSelectTmmnto: [],
       valid: false,
@@ -288,12 +308,26 @@ export default {
     ChangeProyecto (event) {
       console.log('function: ChangeProyecto(). ')
       /* Si se seleccinan todos */
-      for (let f = 0; f < this.modelSelect.length; f++) {
-        if (this.modelSelect[f].sucursal_id === 0) {
+      //for (let f = 0; f < this.modelSelect.length; f++) {
+        if(this.modelSelect != null)
+        {
+          if (this.modelSelect.sucursal_id === 0) {
           this.modelSelect = this.selectSucursal
+          }
         }
-      }
+        
+      //}
       console.log(this.modelSelect)
+    },
+    ChangeEstatus(event)
+    {
+        if(this.modelSelectEstatico !=null)
+        {
+          if(this.modelSelectEstatico == 0)
+          {
+            this.modelSelectEstatico = this.selectEstatus
+          }
+        }
     },
     ChangeTipoMmnto (event) {
       console.log('function: ChangeTipoMmnto(). ')
@@ -390,10 +424,11 @@ export default {
       const sucursal = vm.getSucursal()
       const tipoMantenible = vm.getTipoMantenible()
       const mantenible = vm.getMantenible()
-      console.log(empresa)
+      const estatus = vm.getEstatus()
+      /*console.log(empresa)
       console.log(sucursal)
       console.log(tipoMantenible)
-      console.log(mantenible)
+      console.log(mantenible)*/
       vm.overlay = true
       unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarReporteProximosServicios')
         .send({
@@ -401,6 +436,7 @@ export default {
           "sucursal_id": sucursal,
           "tipoMantenible_id": tipoMantenible,
           "tipomantenimientoid": 0,
+          "estatus_id":estatus,
           "mantenible_id":[ mantenible ]
         }).end(function (res) {
         vm.overlay = false
@@ -409,6 +445,8 @@ export default {
             this.msjException = true
             throw new Error(res.error)
           }
+          
+          //vm.rowData = vm.informaciondummy;
           vm.rowData = res.body.obj
           vm.generaCalendario()
 
@@ -427,10 +465,15 @@ export default {
       console.log('function: getSucursal(). ')
       let dato = 0
       if (vm.modelSelect != null) {
-        if (vm.modelSelect.length > 0) {
+        /*if (vm.modelSelect.length > 0) {
           dato = vm.modelSelect[0].sucursal_id
+        }*/
+        if(vm.modelSelect != null)
+        {
+          dato = vm.modelSelect.sucursal_id
         }
       }
+      
       /*
       for (let i = 0; i < vm.modelSelect.length; i++) {
         if (dato === '') {
@@ -440,6 +483,21 @@ export default {
         }
       }
       */
+      return dato
+    },
+    getEstatus () {
+      const vm = this
+      console.log('function: getEstatus(). ')
+      let dato = 0
+      if (vm.modelSelectEstatico != null) {
+        if (vm.modelSelectEstatico.length > 0) {
+          dato = vm.modelSelect.estatus_id
+        }
+        if(vm.modelSelectEstatico != null)
+        {
+          dato = vm.modelSelectEstatico.estatus_id
+        }
+      } 
       return dato
     },
     getTipoMantenible () {
@@ -500,54 +558,223 @@ export default {
         return
       }
       for (var i=0; i<vm.rowData.length; i++) {
-        var fecha_arr = new Date(vm.rowData[i].Fecha_Ultimo_Servicio)
-        var SumaDias = parseInt(vm.rowData[i].recurrencia_dias_servicio)
+        var fecha_arr = new Date(vm.rowData[i].FechaRecepcion)
+        var fecha_arr2 = new Date(vm.rowData[i].FechaSalida)
+        var SumaDias = 1; //parseInt(vm.rowData[i].recurrencia_dias_servicio)
         var StringAnio = new Date().toISOString().substr(0, 4)
         var StringPro = fecha_arr.toISOString().substr(0, 4)
         var AnioAhora = parseInt(StringAnio)
         AnioAhora = AnioAhora + 1
         var AnioPro = parseInt(StringPro)
-        while (AnioAhora >= AnioPro) {
-          fecha_arr.setDate(fecha_arr.getDate() + SumaDias);
-          var HoraInicio = fecha_arr.toISOString().substr(0, 10)
-          var HoraFin = fecha_arr.toISOString().substr(0, 10)
+        //while (AnioAhora >= AnioPro) {
+          //fecha_arr.setDate(fecha_arr.getDate() );
+          var etiquetaestatus;
+          var HoraInicio =  fecha_arr.toISOString().substr(0, 10) + " " + (fecha_arr.getHours()>9?fecha_arr.getHours(): "0"+fecha_arr.getHours()   )+ ":" + ( fecha_arr.getMinutes()>9? fecha_arr.getMinutes(): "0"+ fecha_arr.getMinutes()) ; //"2020-05-01 08:00";  //
+          var HoraFin =  fecha_arr2.toISOString().substr(0, 10) + " " +  (fecha_arr2.getHours()>9?fecha_arr2.getHours(): "0"+fecha_arr2.getHours()   )+ ":" + (fecha_arr2.getMinutes()>9?fecha_arr2.getMinutes(): "0"+fecha_arr2.getMinutes() ); //"2020-05-01 10:00" ;//
+           console.log(i);
+          console.log(HoraInicio + " " + fecha_arr);
+          console.log(HoraFin + " " + fecha_arr2);
+          
           switch (vm.rowData[i].Estatus) {
             case "1":
-              color = 'cyan'
+              color = 'cyan'  // Programado
+              etiquetaestatus = "Programado";
               break
             case "2":
-              color = 'yellow'
+              color = 'yellow' // En proceso
+              etiquetaestatus = "En Proceso (En tiempo)";
               break
             case "3":
-              color = 'red lighten-1'
+              color = 'red lighten-1' // 
+              etiquetaestatus = "Pasado de Fecha";
               break
             case "4":
               color = 'green'
+              etiquetaestatus = "En Tiempo y Forma";
               break
+            case "5":
+              color = 'orange'
+              etiquetaestatus = "En Proceso (Con Retraso)";
+              break
+             
           }
           // Validar que se no se repitan los colores rojos
+          var refacciones = "";
+          for(var j=0; j<vm.rowData[i].listRefaccion.length; j++)
+          {
+              refacciones += "<tr><td><center>" + vm.rowData[i].listRefaccion[j].cantidadArticulo + "</center></td><td>" + vm.rowData[i].listRefaccion[j].articulocodigo + "</td><td>" + vm.rowData[i].listRefaccion[j].nombrearticulo + "</td> ";
+          }
+
+          var herramienta = "";
+          for(var j=0; j<vm.rowData[i].listHerramienta.length; j++)
+          {
+              herramienta += "<tr><td><center>" + vm.rowData[i].listHerramienta[j].cantidadHerramienta + "</center></td><td>" + vm.rowData[i].listHerramienta[j].HerramientaCodigo + "</td><td>" + vm.rowData[i].listHerramienta[j].HerramientaNombre + "</td> ";
+          }
+
           vm.events.push({
-            name: vm.rowData[i].mantenible_nombre,
+            name: vm.rowData[i].FolioOrden + "-" + etiquetaestatus ,
             start: HoraInicio,
             end: HoraFin,
             color: color,
-            details: vm.rowData[i].Nombre_Servicio
+            details: "<b>Folio: </b><br>" + vm.rowData[i].FolioOrden + "<br>" +
+                      "<b>Vehículo/Mantenible:</b><br>"  +
+                       vm.rowData[i].mantenible_nombre + 
+                      "<br><b>Rutina:</b> <br>" + 
+                      vm.rowData[i].nombre_rutina + "<br>" + 
+                      "<b>Sucursal:</b> <br>" + 
+                      vm.rowData[i].sucursal_nombre + "<br>" + 
+                      "<b>Estatus de la Orden:</b> <br>" + 
+                      vm.rowData[i].estatusOrden + "<br>" + 
+                      "<b>F. Recepción:</b> <br>" + 
+                      HoraInicio + " <br>" +
+                      "<b>F. Salida:</b> <br>" +
+                      //vm.rowData[i].FechaSAlida.toISOString().substr(0, 10) + " " +  (vm.rowData[i].FechaSAlida.getHours()>9?vm.rowData[i].FechaSAlida.getHours(): "0"+vm.rowData[i].FechaSAlida.getHours()   )+ ":" + vm.rowData[i].FechaSAlida.getMinutes() + "<br>" + 
+                      HoraFin + " <br>" +
+                      "<br> <b>Refacciones: </b> <br>" + 
+                      "<table  border='1' cellspacing='0' cellpadding='1' align='center'> <tr bgcolor='" + color + "'  > <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+refacciones+"</table>" + 
+                      "<br> <b>Herramientas: </b> <br>" + 
+                      "<table border='1' cellspacing='0' cellpadding='1' align='center' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+herramienta+"</table>"
           })
           //var FechaWhile = new Date(fecha_arr).toISOString().substr(0, 10)
           StringPro = fecha_arr.toISOString().substr(0, 4)
           AnioPro = parseInt(StringPro)
-        }
+        //}
       }
       console.log(vm.events)
+    },
+    procesarArchivoExcel( )
+    {
+      const vm = this
+      const empresa = vm.getEmpresa()
+      const sucursal = vm.getSucursal()
+      const tipoMantenible = vm.getTipoMantenible()
+      const mantenible = vm.getMantenible()
+      var meses = ["ENERO","FEBRERO","MARZO","ABRIL", "MAYO", "JUNIO", "JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
+      vm.ReporteExcel = [];
+      /*console.log(empresa)
+      console.log(sucursal)
+      console.log(tipoMantenible)
+      console.log(mantenible)*/
+      vm.overlay = true
+      unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarReporteProximosServicios')
+        .send({
+          'EmpresaID': empresa,
+          "sucursal_id": sucursal,
+          "tipoMantenible_id": tipoMantenible,
+          "tipomantenimientoid": 0,
+          "mantenible_id":[ mantenible ]
+        }).end(function (res) {
+        vm.overlay = false
+          if (res.error) {
+            vm.msjAlerta = 'No se encontraron datos para mostrar'
+            this.msjException = true
+            throw new Error(res.error)
+          }
+          
+          //vm.rowData = vm.informaciondummy;
+          vm.rowData = res.body.obj
+          var fechaActual =  Date.now();
+          var fechaparames = new Date();
+          var mes = fechaparames.getMonth() + 1;
+          var dia = fechaparames.getDate();
+          var anio = fechaparames.getFullYear();
+          var fechadiahoy = new Date(anio,mes,dia);
+          for (var i=0; i<vm.rowData.length; i++) {
+            var fecha_evento = new Date(vm.rowData[i].FechaRecepcion)
+            var anioEvento = fecha_evento.toISOString().substr(0, 4);
+            var mesEvento = fecha_evento.toISOString().substr(5, 2);
+            var diaEvento = fecha_evento.toISOString().substr(7, 2);
+            var fechaEvento =  new Date(anioEvento, mesEvento, diaEvento);
+             
+            for(var j=0; j<vm.rowData[i].listRefaccion.length; j++)
+            {
+              if(fechaEvento>= fechadiahoy)
+              {
+                let articulo = {
+                  "NumeroArticulo":vm.rowData[i].listRefaccion[j].articulocodigo ,
+                  "Descripcion":vm.rowData[i].listRefaccion[j].nombrearticulo ,
+                  "Almacen":vm.rowData[i].listRefaccion[j].almacenSAP
+                  
+                };
+                
+                const found = vm.ReporteExcel.find(element => element.NumeroArticulo == vm.rowData[i].listRefaccion[j].articulocodigo);
+                if(found == null)
+                {
+                  for(var k=parseInt(mes)  ; k <  parseInt(mes) + 6; k++)
+                  {
+                    
+                    if(k>12)
+                      if(k == parseInt(mesEvento -1))
+                        articulo[meses[k ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
+                      else
+                        articulo[meses[k ]] = 0;
+                    else
+                      if(k == parseInt(mesEvento-1))
+                        articulo[meses[k ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
+                      else
+                        articulo[meses[k ]] = 0;
+                  }
+                  vm.ReporteExcel.push(articulo);
+                }                  
+                else
+                {
+                  
+                  for(var x = 0; x<  vm.ReporteExcel.length; x++)
+                  {
+                    
+                    if(vm.ReporteExcel[x].NumeroArticulo == vm.rowData[i].listRefaccion[j].articulocodigo )
+                    {
+                       for(var y=parseInt(mes)    ; y < parseInt(mes) + 6; y++)
+                      {
+ 
+                        if(y == parseInt(mesEvento)-1)
+                        {
+                          var c = 0;
+                          c = vm.ReporteExcel[x][meses[y  ]];
+                          c += vm.rowData[i].listRefaccion[j].cantidadArticulo;                           
+                          vm.ReporteExcel[x][meses[y  ]] = c; 
+
+                        }
+                        
+                      }
+                    }
+                
+                    
+                      
+                  }
+ 
+                }
+              }
+            }
+            
+          }
+          //Esta línea descarga el excel.
+          let data = XLSX.utils.json_to_sheet(vm.ReporteExcel)
+          const workbook = XLSX.utils.book_new()
+          const filename = 'Estatus Prevision Refac KF '+dia + "-"+mes+"-"+anio ;
+          const worksheet = 'hoja.'+dia + "."+mes+"."+anio
+          XLSX.utils.book_append_sheet(workbook, data, worksheet)
+          XLSX.writeFile(workbook, `${filename}.xlsx`)
+          //console.log('Arreglo: ')
+          //console.log(res.body)
+        })
+ 
+        
+       
+
+
+
     },
     excel () {
       let vm = this
       console.log('function: Excel().')
-      let data = XLSX.utils.json_to_sheet(vm.events)
+      //informaciondummy vm.events
+      vm.procesarArchivoExcel( );
+      /*let data = XLSX.utils.json_to_sheet(vm.ReporteExcel)
       const workbook = XLSX.utils.book_new()
       const filename = 'Proximos_Servicios'
       XLSX.utils.book_append_sheet(workbook, data, filename)
-      XLSX.writeFile(workbook, `${filename}.xlsx`)
+      XLSX.writeFile(workbook, `${filename}.xlsx`)*/
     },
     pdf() {
       let vm = this
@@ -559,22 +786,53 @@ export default {
       }
       var headerTable = ''
       var detalle = ''
-      var nombre = 'ProximosServicios'
+      var nombre = 'REPORTE ESTATUS O.S./PRÓXIMOS SERVICIOS'
       if(vm.events.length > 0) {
         headerTable += '' +
-          '<td style="border: 1px solid #ddd;">MANTENIBLE</td>' +
-          '<td style="border: 1px solid #ddd;">FECHA_INICIO</td>' +
-          '<td style="border: 1px solid #ddd;">FECHA_FIN</td>' +
-          '<td style="border: 1px solid #ddd;">COLOR</td>' +
-          '<td style="border: 1px solid #ddd;">DETALLE</td>'
+/**/          '<td style="border: 1px solid #ddd;">FOLIO</td>' +
+          '<td style="border: 1px solid #ddd;">VEHÍCULO/MANTENIBLE</td>' +
+          '<td style="border: 1px solid #ddd;">RUTINA</td>' +
+         '<td style="border: 1px solid #ddd;">SUCURSAL</td>' + 
+          '<td style="border: 1px solid #ddd;">ESTATUS</td>' +
+          '<td style="border: 1px solid #ddd;">INICIO</td>' +
+          '<td style="border: 1px solid #ddd;">FIN</td>';
+          /*"<b>Folio: </b><br>" +vm.rowData[i].FolioOrden + "<br>" +
+                      "<b>Vehículo/Mantenible:</b><br>"  +
+                       vm.rowData[i].mantenible_nombre + 
+                      "<br><b>Rutina:</b> <br>" + 
+                      vm.rowData[i].nombre_rutina + "<br>" + 
+                      "<b>Sucursal:</b> <br>" + 
+                      vm.rowData[i].sucursal_nombre + "<br>" + 
+                      "<b>Estatus de la Orden:</b> <br>" + 
+                      vm.rowData[i].estatusOrden + "<br>" + 
+                      "<b>F. Recepción:</b> <br>" + 
+                      HoraInicio + " <br>" +
+                      "<b>F. Salida:</b> <br>" +
+                      //vm.rowData[i].FechaSAlida.toISOString().substr(0, 10) + " " +  (vm.rowData[i].FechaSAlida.getHours()>9?vm.rowData[i].FechaSAlida.getHours(): "0"+vm.rowData[i].FechaSAlida.getHours()   )+ ":" + vm.rowData[i].FechaSAlida.getMinutes() + "<br>" + 
+                      HoraFin + " <br>" +
+                      "<br> <b>Refacciones: </b> <br>" + 
+                      "<table  border='1' cellspacing='0' cellpadding='1' align='center'> <tr bgcolor='" + color + "'  > <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+refacciones+"</table>" + 
+                      "<br> <b>Herramientas: </b> <br>" + 
+                      "<table border='1' cellspacing='0' cellpadding='1' align='center' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+herramienta+"</table>"
+         */ 
 
-        for(var x = 0; x < vm.events.length; x++) {
+
+
+        for(var x = 0; x < vm.rowData.length; x++) {
+          var fecha_arr = new Date(vm.rowData[x].FechaRecepcion)
+          var fecha_arr2 = new Date(vm.rowData[x].FechaSalida)
+          var HoraInicio =  fecha_arr.toISOString().substr(0, 10) + " " + (fecha_arr.getHours()>9?fecha_arr.getHours(): "0"+fecha_arr.getHours()   )+ ":" + ( fecha_arr.getMinutes()>9? fecha_arr.getMinutes(): "0"+ fecha_arr.getMinutes()) ; //"2020-05-01 08:00";  //
+          var HoraFin =  fecha_arr2.toISOString().substr(0, 10) + " " +  (fecha_arr2.getHours()>9?fecha_arr2.getHours(): "0"+fecha_arr2.getHours()   )+ ":" + (fecha_arr2.getMinutes()>9?fecha_arr2.getMinutes(): "0"+fecha_arr2.getMinutes() ); //"2020-05-01 10:00" ;//
+          
           detalle += '<tr style="border: 1px solid #ddd;">' +
-            '<td style="border: 1px solid #ddd;">' + vm.events[x].name + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.events[x].start + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.events[x].end + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.events[x].color + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.events[x].details + '</td>' +
+            /**/'<td style="border: 1px solid #ddd;">' + vm.rowData[x].FolioOrden + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowData[x].mantenible_nombre  + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowData[x].nombre_rutina + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowData[x].sucursal_nombre + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowData[x].estatusOrden + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + HoraInicio + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + HoraFin + '</td>' +
+ 
             '</tr>'
         }
       }
@@ -781,6 +1039,15 @@ export default {
       { sucursal_id: 2, sucursal_nombre: 'Filo 2' },
       { sucursal_id: 3, sucursal_nombre: 'Filo 3' },
       { sucursal_id: 4, sucursal_nombre: 'Filo 4' }
+    ]
+
+    this.selectEstatus = [
+      {estatus_id:0,estastus_nombre:'Todo'},
+      {estatus_id:1,estastus_nombre:'O.S. Programada'},
+      {estatus_id:2,estastus_nombre:'O.S. En Proceso (En tiempo)'},
+      {estatus_id:3,estastus_nombre:'O.S. En Proceso (Con retraso)'},
+      {estatus_id:4,estastus_nombre:'O.S. Pasada de fecha'},
+      {estatus_id:5,estastus_nombre:'O.S. Finalizado (En Tiempo y Forma)'},
     ]
 
     this.dataSelectMante = [
