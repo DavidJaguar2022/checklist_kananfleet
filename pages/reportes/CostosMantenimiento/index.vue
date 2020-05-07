@@ -32,6 +32,7 @@
               label="nombre"
               v-model="consultar"
               :options="tipoConsulta"
+              @change="ChangeTipoConsulta"
               placeholder="tipo consulta"
             ></v-select>
           </div>
@@ -161,8 +162,8 @@
           <v-data-table
             :headers="colsTable"
             :items="rowDataTable"
-            item-key="sucursal_id"
-            group-by="sucursal_nombre"
+            :item-key="itemKey"
+            :group-by="itemGroup"
             class="elevation-1"
             locate="esp"
             dense
@@ -396,6 +397,8 @@ export default {
       cantidadAgrupa: 7,
       iniArr: 0,
       finArr: 0,
+      itemKey: null,
+      itemGroup: null,
     }
   },
   methods: {
@@ -464,6 +467,25 @@ export default {
         this.modelTipoGrafica = 'line'
       }
       console.log(this.modelTipoGrafica)
+    },
+    ChangeTipoConsulta (event) {
+      let vm = this
+      console.log('function: ChangeTipoConsulta().')
+      console.log(event)
+      switch (event.tipo) {
+        case 1:
+          vm.itemKey = 'sucursal_id'
+          vm.itemGroup = 'sucursal_nombre'
+          break
+        case 2:
+          vm.itemKey = 'tipoMantenible_id'
+          vm.itemGroup = 'tipoMantenible_nombre'
+          break
+        case 3:
+          vm.itemKey = 'mantenible_id'
+          vm.itemGroup = 'mantenible_nombre'
+          break
+      }
     },
     getGraficaDetalle () {
       console.log('function: getGraficaDetalle().')
@@ -1563,6 +1585,9 @@ export default {
         ]
       },
       options: {
+        animation: {
+          duration: 0
+        },
         responsive: true,
         lineTension: 1,
         scales: {

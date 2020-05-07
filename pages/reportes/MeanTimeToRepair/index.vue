@@ -33,6 +33,7 @@
               v-model="consultar"
               :options="tipoConsulta"
               placeholder="tipo consulta"
+              @change="ChangeTipoConsulta"
             ></v-select>
           </div>
         </v-flex>
@@ -144,9 +145,9 @@
           <v-data-table
             :headers="colsTable"
             :items="rowDataTable"
-            item-key="sucursal_id"
+            :item-key="itemKey"
+            :group-by="itemGroup"
             dense
-            group-by="sucursal_nombre"
             class="elevation-1"
             locale="esp"
           ></v-data-table>
@@ -321,9 +322,30 @@ export default {
       cantidadAgrupa: 7,
       iniArr: 0,
       finArr: 0,
+      itemKey: null,
+      itemGroup: null
     }
   },
   methods: {
+    ChangeTipoConsulta (event) {
+      let vm = this
+      console.log('function: ChangeTipoConsulta().')
+      console.log(event)
+      switch (event.tipo) {
+        case 1:
+          vm.itemKey = 'sucursal_id'
+          vm.itemGroup = 'sucursal_nombre'
+          break
+        case 2:
+          vm.itemKey = 'tipoMantenible_id'
+          vm.itemGroup = 'tipoMantenible_nombre'
+          break
+        case 3:
+          vm.itemKey = 'mantenible_id'
+          vm.itemGroup = 'mantenible_nombre'
+          break
+      }
+    },
     onGridReady (params) {
       console.log('onGridReady')
       this.gridApi = params.api
