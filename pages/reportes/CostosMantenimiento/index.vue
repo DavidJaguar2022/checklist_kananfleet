@@ -352,11 +352,12 @@ export default {
         { text: 'PROYECTO', value: 'sucursal_nombre' },
         { text: 'MANTENIBLE', value: 'mantenible_nombre' },
         { text: 'TIPO MANTENIBLE', value: 'tipoMantenible_nombre' },
-        { text: 'SKU', value: 'itemID' },
-        { text: 'CANTIDAD', value: 'cantidad' },
-        { text: 'PRECIO', value: 'precioarticulo' },
-        { text: 'TOITAL', value: 'CostoTotalArticulo' },
-          { text: 'TIPO MMTO', value: 'tipoMantenimiento_nombre' },
+        { text: 'FOLIO', value: 'FolioOrden' },
+        { text: 'C. ADICIONALES', value: 'costoadicional' },
+        { text: 'C. MECANICO', value: 'costomecanico' },
+        { text: 'C. SERVICIO', value: 'costoservicio' },
+        { text: 'C. TOTAL', value: 'Costo' },
+        
         { text: 'SERVICIO', value: 'servicio_nombre' },
         { text: 'FECHA', value: 'fechaTaller' }
       ],
@@ -493,12 +494,12 @@ export default {
           '<td style="border: 1px solid #ddd;">PROYECTO</td>' +
           '<td style="border: 1px solid #ddd;">MANTENIBLE</td>' +
           '<td style="border: 1px solid #ddd;">TIPO_MANTENIBLE</td>' +
-          '<td style="border: 1px solid #ddd;">SKU</td>' +
-          '<td style="border: 1px solid #ddd;">CANTIDAD</td>' +
-          '<td style="border: 1px solid #ddd;">PRECIO</td>' +
-          '<td style="border: 1px solid #ddd;">TOTAL</td>' +
-          '<td style="border: 1px solid #ddd;">TIPO_MMTO</td>' +
-          '<td style="border: 1px solid #ddd;">SERVICIO</td>' +
+          '<td style="border: 1px solid #ddd;">FOLIO</td>' +
+          '<td style="border: 1px solid #ddd;">C. ADICIONALES</td>' +
+          '<td style="border: 1px solid #ddd;">C. MECANICO</td>' +
+          '<td style="border: 1px solid #ddd;">C. SERVICIO</td>' +
+          '<td style="border: 1px solid #ddd;">C. TOTAL</td>' +
+           
           '<td style="border: 1px solid #ddd;">FECHA</td>'
 
         for(var x = 0; x < vm.rowDataTable.length; x++) {
@@ -506,11 +507,11 @@ export default {
             '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].sucursal_nombre + '</td>' +
             '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].mantenible_nombre + '</td>' +
             '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].tipoMantenible_nombre + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].itemID + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].cantidad + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].precioarticulo + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].CostoTotalArticulo + '</td>' +
-            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].tipoMantenimiento_nombre + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].FolioOrden + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].costoadicional + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].costomecanico + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].costoservicio + '</td>' +
+            '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].Costo + '</td>' +
             '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].servicio_nombre + '</td>' +
             '<td style="border: 1px solid #ddd;">' + vm.rowDataTable[x].fechaTaller + '</td>' +
             '</tr>'
@@ -656,10 +657,10 @@ export default {
             if (this.agrupar == true) {
               precioarticulo = this.rowData[b].precioarticulo
             } else {
-              precioarticulo = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+              precioarticulo = parseFloat(this.rowData[b].precioarticulo)
             }
             var total = cantidad * precioarticulo
-            //var costoSumar = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+            //var costoSumar = parseFloat(this.rowData[b].precioarticulo)
             this.rowData[b].CostoTotalArticulo = total //this.rowData[b].cantidad * this.rowData[b].precioarticulo
             this.Temporal[c].precioarticulo += this.rowData[b].CostoTotalArticulo
           }
@@ -722,10 +723,10 @@ export default {
             if (this.agrupar == true) {
               precioarticulo = this.rowData[b].precioarticulo
             } else {
-              precioarticulo = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+              precioarticulo = parseFloat(this.rowData[b].precioarticulo)
             }
             var total = cantidad * precioarticulo
-            //var costoSumar = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+            //var costoSumar = parseFloat(this.rowData[b].precioarticulo)
             this.rowData[b].CostoTotalArticulo = total //this.rowData[b].cantidad * this.rowData[b].precioarticulo
             this.Temporal[c].precioarticulo += this.rowData[b].CostoTotalArticulo
           }
@@ -777,11 +778,12 @@ export default {
           if (this.rowData[b].sucursal_id === this.Temporal[c].sucursal_id) {
             var preArticuloSumar = 0
             if (this.agrupar == false) {
-              preArticuloSumar = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+              preArticuloSumar = parseFloat(this.rowData[b].Costo)
             } else {
-              preArticuloSumar = this.rowData[b].precioarticulo
+              preArticuloSumar = this.rowData[b].costo
             }
-            this.rowData[b].CostoTotalArticulo = this.rowData[b].cantidad * preArticuloSumar
+            //this.rowData[b].CostoTotalArticulo = this.rowData[b].cantidad * preArticuloSumar
+            this.rowData[b].CostoTotalArticulo =   preArticuloSumar
             this.Temporal[c].precioarticulo += this.rowData[b].CostoTotalArticulo
           }
         }
@@ -832,11 +834,12 @@ export default {
           if (this.rowData[b].tipoMantenible_id === this.Temporal[c].tipovehiculo_id) {
             var preArticuloSumar = 0
             if (this.agrupar == false) {
-              preArticuloSumar = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+              preArticuloSumar = parseFloat(this.rowData[b].Costo)
             } else {
-              preArticuloSumar = this.rowData[b].precioarticulo
+              preArticuloSumar = this.rowData[b].costo
             }
-            this.rowData[b].CostoTotalArticulo = this.rowData[b].cantidad * preArticuloSumar
+            //this.rowData[b].CostoTotalArticulo = this.rowData[b].cantidad * preArticuloSumar
+            this.rowData[b].CostoTotalArticulo =   preArticuloSumar
             this.Temporal[c].precioarticulo += this.rowData[b].CostoTotalArticulo
           }
         }
@@ -881,18 +884,18 @@ export default {
         for (let c = 0; c < this.Temporal.length; c++) {
           if (this.rowData[b].mantenible_id === this.Temporal[c].mantenible_id) {
             /*
-            var precioSumar = parseFloat(this.rowData[b].CostoTotalArticulo.replace('$',''))
+            var precioSumar = parseFloat(this.rowData[b].CostoTotalArticulo)
             this.Temporal[c].precioarticulo += precioSumar
-            var cantidadSumar = parseFloat(this.rowData[b].cantidad.replace('$',''))
+            var cantidadSumar = parseFloat(this.rowData[b].cantidad)
             this.rowData[b].CostoTotalArticulo = cantidadSumar * precioSumar
             */
             var preArticuloSumar = 0
             if (this.agrupar == false) {
-              preArticuloSumar = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+              preArticuloSumar = parseFloat(this.rowData[b].Costo)
             } else {
-              preArticuloSumar = this.rowData[b].precioarticulo
+              preArticuloSumar = this.rowData[b].Costo
             }
-            this.rowData[b].CostoTotalArticulo = this.rowData[b].cantidad * preArticuloSumar
+            this.rowData[b].CostoTotalArticulo =  preArticuloSumar
             this.Temporal[c].precioarticulo += this.rowData[b].CostoTotalArticulo
           }
         }
@@ -951,18 +954,18 @@ export default {
         for (let c = 0; c < this.Temporal.length; c++) {
           if (this.rowData[b].mantenible_id === this.Temporal[c].mantenible_id) {
             /*
-            var cantidadSumar = parseFloat(this.rowData[b].cantidad.replace('$',''))
-            var preArticuloSumar = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+            var cantidadSumar = parseFloat(this.rowData[b].cantidad)
+            var preArticuloSumar = parseFloat(this.rowData[b].precioarticulo)
             this.rowData[b].CostoTotalArticulo = cantidadSumar * preArticuloSumar
             this.Temporal[c].precioarticulo += this.rowData[b].CostoTotalArticulo
             */
             var preArticuloSumar = 0
             if (this.agrupar == false) {
-              preArticuloSumar = parseFloat(this.rowData[b].precioarticulo.replace('$',''))
+              preArticuloSumar = parseFloat(this.rowData[b].Costo)
             } else {
-              preArticuloSumar = this.rowData[b].precioarticulo
+              preArticuloSumar = this.rowData[b].Costo
             }
-            this.rowData[b].CostoTotalArticulo = this.rowData[b].cantidad * preArticuloSumar
+            this.rowData[b].CostoTotalArticulo = this.rowData[b].Costo
             this.Temporal[c].precioarticulo += this.rowData[b].CostoTotalArticulo
           }
         }
@@ -1450,12 +1453,12 @@ export default {
       { text: 'MANTENIBLE', value: 'mantenible_nombre' },
       // { text: 'tipovehiculo_id', value: 'tipovehiculo_id', hide: true },
       { text: 'TIPO MANTENIBLE', value: 'tipoMantenible_nombre' },
-      { text: 'SKU', value: 'itemID' },
-      { text: 'CANTIDAD', value: 'cantidad' },
-      { text: 'PRECIO', value: 'precioarticulo' }, // Costo
-      { text: 'TOITAL', value: 'CostoTotalArticulo' }, // Total
+      { text: 'FOLIO', value: 'FolioOrden' },
+      { text: 'C. ADICIONALES', value: 'costoadicional' },
+      { text: 'C. MECANICO', value: 'costomecanico' }, // Costo
+      { text: 'C. SERVICIO', value: 'costoservicio' }, // Total
       // { text: 'tipoMantenimiento_id', value: 'tipoMantenimiento_id', hide: true },
-      { text: 'TIPO MMTO', value: 'tipoMantenimiento_nombre' },
+      { text: 'C. TOTAL', value: 'Costo' },
       // { text: 'servicio_id', value: 'servicio_id', hide: true },
       { text: 'SERVICIO', value: 'servicio_nombre' },
       { text: 'FECHA', value: 'fechaTaller' }

@@ -651,9 +651,9 @@
               <v-autocomplete
                       v-model="recibio"
                       label="Recibió"
-                      :items="empleados"
+                      :items="mecanicos"
                       item-text="Nombre"
-                      item-value="Nombre"
+                      item-value="Empleadoid"
                       hint="Elija Quién recibió"
                       prepend-icon="mdi-account"
               ></v-autocomplete>
@@ -662,9 +662,9 @@
               <v-autocomplete
                       v-model="aprobo"
                       label="Aprobó"
-                      :items="empleados"
+                      :items="aprobador"
                       item-text="Nombre"
-                      item-value="Nombre"
+                      item-value="Empleadoid"
                       hint="Elija Quién Aprobó"
                       prepend-icon="mdi-account"
               ></v-autocomplete>
@@ -673,9 +673,9 @@
               <v-autocomplete
                       v-model="entrego"
                       label="Entregó"
-                      :items="empleados"
+                      :items="validador"
                       item-text="Nombre"
-                      item-value="Nombre"
+                      item-value="Empleadoid"
                       hint="Elija Quién Entregó"
                       prepend-icon="mdi-account"
               ></v-autocomplete>
@@ -888,6 +888,9 @@ export default {
       aprobo: '---',
       entrego: '---',
       empleados: [],
+      mecanicos: [],
+      validador: [],
+      aprobador: [],
       dessertPrint: []
     }
   },
@@ -898,6 +901,33 @@ export default {
         .end(function (res) {
           if (res.error) { throw new Error(res.error) }
           vm.empleados = res.body
+        })
+    },
+    getEmpleadosMecanicos () {
+      const vm = this
+      unirest('POST', vm.url + '/api/Reportes/GetMecanico'  )
+        .send({ 'EmpresaID': vm.getEmpresa() })//
+        .end(function (res) {
+          if (res.error) { throw new Error(res.error) }
+          vm.mecanicos = res.body.empleado
+        })
+    },
+    getEmpleadosValidadores () {
+      const vm = this
+      unirest('POST', vm.url + '/api/Reportes/GetValidador'  )
+      .send({ 'EmpresaID': vm.getEmpresa() })//
+        .end(function (res) {
+          if (res.error) { throw new Error(res.error) }
+          vm.validador = res.body.empleado
+        })
+    },
+    getEmpleadosAprobadores () {
+      const vm = this
+      unirest('POST', vm.url + '/api/Reportes/GetAprobador' )
+      .send({ 'EmpresaID': vm.getEmpresa() })//
+        .end(function (res) {
+          if (res.error) { throw new Error(res.error) }
+          vm.aprobador = res.body.empleado
         })
     },
     formatoFecha (date) {
@@ -1558,6 +1588,9 @@ export default {
     window.vm.getSucursales()
     window.vm.getVehiculos()
     window.vm.getEmpleados()
+    window.vm.getEmpleadosMecanicos();
+    window.vm.getEmpleadosValidadores();
+    window.vm.getEmpleadosAprobadores();
   }
 }
 </script>
