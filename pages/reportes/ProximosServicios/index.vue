@@ -1,112 +1,161 @@
 <template>
   <v-layout row wrap>
     <v-layout row wrap>
-      <v-app-bar
-              color="black"
-              fixed
-              app
-              dark
-      >
-        <v-icon>mdi-file-chart</v-icon>
-        <v-toolbar-title v-text="title_Page"/>
+      
+       <div class="headline" style="margin-top: 1%;">
+        <!--v-icon color="black">mdi-clipboard-check</v-icon-->
+        REPORTE ESTATUS ORDEN DE SERVICIO (O.S.) / PRÓXIMOS SERVICIOS 
+        <hr class="my-1">
+        
+        </div>
+        
         <v-spacer />
         <img src="/logo.png" width="12%" max-height="5%" alt="Logo Kananfleet"/>
-      </v-app-bar>
+        
     </v-layout>
+    
     <v-flex lg12 md12>
-      <div class="headline">
-        <!--v-icon color="black">mdi-clipboard-check</v-icon-->
-        REPORTE ESTATUS ORDEN DE SERVICIO (O.S.)/PRÓXIMOS SERVICIOS
-        <hr class="my-3">
-      </div>
-      <div class="headline">
-        <!--v-icon color="black">mdi-clipboard-check</v-icon-->
-        REPORTE ESTATUS ORDEN DE SERVICIO (O.S.)/PRÓXIMOS SERVICIOS
-        <hr class="my-3">
-      </div>
+       
+      
       <!-- page-->
       <v-layout row wrap>
         <v-flex xs2>
-          <div style="margin-left: 3%; margin-top: 7%;">
+          <div style="margin-left: 3%; margin-top: 7%; font-family: 'Gill Sans Extrabold', Helvetica, sans-serif; font-size:15px  ">
+            
+            <label >F. Inicio</label> <br>
+          <input type="date" style="border-style:solid;" v-model="FInicioModel"    title="F. Inicio">
+          </div>
+        </v-flex>
+
+        <v-flex xs2>
+          <div style="margin-left: 3%; margin-top: 7%; font-family: 'Gill Sans Extrabold', Helvetica, sans-serif; font-size:15px  ">
+            <label >F. Final</label> <br>
+          <input type="date" style="border-style:solid;" v-model="FFinalModel"     title="F. Final">
+    
+          </div>
+        </v-flex>
+
+        <v-flex xs2>
+          <div style="margin-left: 3%; margin-top: 5%; font-family: 'Gill Sans Extrabold', Helvetica, sans-serif; font-size:15px ">
+            <label >Sucursal</label> <br>
             <v-select
               label="sucursal_nombre"
               v-model="modelSelect"
               :options="selectSucursal"
               @change="ChangeProyecto"
-              placeholder="Proyecto"
+               
               
             ></v-select>
           </div>
-        </v-flex>  
-        
+        </v-flex> 
+
         <v-flex xs2>
-          <div style="margin-left: 3%; margin-top: 7%; width:300px">
+          <div style="margin-left: 3%; margin-top: 5%; width:300px font-family: 'Gill Sans Extrabold', Helvetica, sans-serif; font-size:15px ">
+            <label >Estatus</label> <br>
             <v-select
               label="estastus_nombre"
               v-model="modelSelectEstatico"
               :options="selectEstatus"
               @change="ChangeEstatus"
-              placeholder="Estatus"
+               
               
             ></v-select>
           </div>
-        </v-flex>   
-        <!--<v-flex xs2>
-          <div style="margin-left: 3%; margin-top: 7%;">
-            <v-select
-              label="tipovehiculo_nombre"
-              v-model="modelSelectTMant"
-              :options="dataSelectTMant"
-              @change="ChangeTipoMante"
-              placeholder="T. mantenible"
-              multiple
-            ></v-select>
+        </v-flex>  
+
+      </v-layout>
+    
+      <v-layout row wrap>
+        <v-flex xs2  >
+          
+          <div style="margin-left: 3%; margin-top: 2%; width:300px;  font-family: 'Gill Sans Extrabold', Helvetica, sans-serif; font-size:15px " >
+            <label >No. Económico</label> <br>
+            <input label="No. Económico" v-model="modelNoEconomico"   class="form-data" style="border-style:solid;"  > 
+             
           </div>
         </v-flex>
-        <v-flex xs2>
-          <div style="margin-left: 3%; margin-top: 7%;">
-            <v-select
-              label="mantenible_nombre"
-              v-model="modelSelectMante"
-              :options="dataSelectMante"
-              @change="ChangeMantenible"
-              placeholder="Mantenible"
-              multiple
-            ></v-select>
+        <v-flex xs2  >
+          <div style="margin-left: 2%; margin-top: 2%; width:300px;  font-family: 'Gill Sans Extrabold', Helvetica, sans-serif; font-size:15px " >
+            <label >Placa</label><br>
+            <input label="Placa" v-model="modelPlaca"    class="form-data" style="border-style:solid;"  > 
+             
           </div>
-        </v-flex>-->
+        </v-flex>
+        <v-flex xs2  >
+          <div style="margin-left: 2%; margin-top: 2%; width:300px;  font-family: 'Gill Sans Extrabold', Helvetica, sans-serif; font-size:15px " >
+            <label >No. O. S.</label> <br>
+            <input label="No. O.S." v-model="modelNoOS"   class="form-data" style="border-style:solid;"  > 
+             
+          </div>
+        </v-flex>
+
         <v-flex xs2 style="max-width: 100px;">
-          <div style="margin-left: 110%; margin-top: 14%; width:200px">
+          <div style="margin-left: 110%; margin-top: 2%; width:200px;  font-family: 'Gill Sans Extrabold', Helvetica, sans-serif;   ">
+            <br>
             <v-btn @click="excel" small dark color="green">
-              <v-icon>mdi-file-excel</v-icon> PREVISIÓN
+              <v-icon>mdi-file-excel</v-icon> Previsión
             </v-btn>
           </div>
         </v-flex>
         <v-flex xs2 style="max-width: 100px;">
-          <div style="margin-left: 135%; margin-top: 14%;">
+          <div style="margin-left: 135%; margin-top: 2%;">
+            <br>
             <v-btn @click="pdf" small dark color="green">
               <v-icon>mdi-file-pdf-box</v-icon> PDF
             </v-btn>
           </div>
         </v-flex>
         <v-flex xs2>
-          <div style="margin-left: 55%; margin-top: 7%;">
+          <div style="margin-left: 55%; margin-top: 1%;">
+            <br>
             <v-btn small color="primary" @click="getGraficaDetalle">
               <v-icon>mdi-magnify</v-icon> Buscar
             </v-btn>
           </div>
         </v-flex>
+
+      </v-layout>
+      <v-layout row wrap>
+        
+ 
+        
         <!-- Calendario -->
         <v-flex xs12>
           <v-row class="fill-height">
             <v-col>
-            <v-col xs12 sm12 md2>
-            <v-icon color="cyan">mdi-brightness-1</v-icon> O.S. Programada
-            <v-icon color="yellow">mdi-brightness-1</v-icon> O.S. En Proceso (En Tiempo)
-            <v-icon color="orange">mdi-brightness-1</v-icon> O.S. En Proceso (Con Retraso)
-            <v-icon color="red lighten-1">mdi-brightness-1</v-icon> O.S. Pasada de Fecha
-            <v-icon color="green">mdi-brightness-1</v-icon> O.S. Finalizado (En Tiempo y Forma)
-            </v-col>
+                <v-col   >
+                <v-row class="fill-height">
+                  
+                    <v-col class="grey lighten-2 border border-dark">
+                      <center>
+                    <v-icon color="cyan">mdi-brightness-1</v-icon> O.S. Programada
+                      </center>
+                    </v-col>
+                    <v-col class="grey lighten-3 border border-dark">
+                      <center>
+                      <v-icon color="yellow">mdi-brightness-1</v-icon> O.S. En Proceso <br>(En Tiempo)
+                      </center>
+                    </v-col>
+                    <v-col class="grey lighten-2 border border-dark">
+                      <center>
+                      <v-icon color="orange">mdi-brightness-1</v-icon> O.S. En Proceso <br>(Con Retraso)
+                      </center>
+                    </v-col>
+                    <v-col class="grey lighten-3 border border-dark">
+                      <center>
+                      <v-icon color="red lighten-1">mdi-brightness-1</v-icon> O.S. Pasada de Fecha
+                      </center>
+                    </v-col>
+                    <v-col class="grey lighten-2 border border-dark">
+                      <center>
+                      <v-icon color="green">mdi-brightness-1</v-icon> O.S. Finalizada <br>(En Tiempo y Forma)
+                      </center>
+                    </v-col>
+                  
+                </v-row>
+                
+                  
+                </v-col>
               <v-sheet height="70">
                 <v-toolbar flat color="white">
                   <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
@@ -118,7 +167,8 @@
                   <v-btn fab text small color="grey darken-2" @click="next">
                     <v-icon small>mdi-chevron-right</v-icon>
                   </v-btn>
-                  <v-toolbar-title>{{ title }}</v-toolbar-title>
+                  <v-toolbar-title>  {{ title }}  </v-toolbar-title>
+                   <v-spacer></v-spacer>
                   <v-menu bottom right>
                     <template v-slot:activator="{ on }">
                       <v-btn
@@ -159,10 +209,12 @@
                   :type="type"
                   @click:event="showEvent"
                   @click:more="viewDay"
-                  @click:date="viewDay"
+                  
+                  @click:day="eventoDia"
                   @change="updateRange"
                   locale="es"
-                   
+                  :event-overlap-threshold="60"
+                  :event-overlap-mode="mode"
                 ></v-calendar>
                 <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
                   <v-card color="grey lighten-4" min-width="350px" flat>
@@ -183,7 +235,7 @@
                       <span v-html="selectedEvent.details"></span>
                     </v-card-text>
                     <v-card-actions>
-                      <v-btn text color="secondary" @click="selectedOpen = false">
+                      <v-btn text color="secondary" @click="closeDetalle">
                         Cerrar
                       </v-btn>
                     </v-card-actions>
@@ -216,23 +268,566 @@
           </v-card>
         </v-dialog>
         <!-- MsjError -->
+        
+            <v-dialog
+              v-model="dialogProyectadas"
+              width="800"
+            >
+            
+              <v-card>
+                <v-card-title
+                  class="headline grey lighten-2"
+                  primary-title
+                >
+                Fecha: {{FechaSeleccionada}}
+                
+                </v-card-title>
+
+                <v-card-text>
+                  <!-- <v-row v-for="(item,index) in objServiciosSeleccionados"> -->
+                    <v-row>
+                      <v-col>
+                       
+                     
+                            <v-btn @click="pdfseleccionados" small dark color="green">
+                              <v-icon>mdi-file-pdf-box</v-icon> PDF
+                            </v-btn>
+                          
+                                
+                          
+                       
+                      </v-col>
+                    </v-row>
+                  <v-row v-for="item in objServiciosSeleccionados" :key="item">
+                    <v-col cols="12" sm="12">
+                      <v-card
+                                color="cyan"                
+                                v-if="item.Estatus === '1'"
+                                
+                              >
+
+                              <v-row>
+                                <v-col cols="12" sm="12">
+                                
+                                  <v-list-item-title class="headline mb-1"> {{item.estatusAMostrar}} / {{item.nombre_rutina}} </v-list-item-title>
+                                  <hr>
+                                  <v-list-item-subtitle><b>Folio:</b>  {{item.FolioOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Vehículo/Mantenible:</b>  {{item.mantenible_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Interno:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Interno:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Externo:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Externo:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Rutina:</b>  {{item.nombre_rutina}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Sucursal:</b>  {{item.sucursal_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Estatus de la Orden:</b> {{item.estatusOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Recepción:</b>  {{item.FechaRecepcionMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Salida:</b>  {{item.FechaSalidaMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Observaciones:</b>  {{item.Observaciones}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><h3>Refacciones</h3></v-list-item-subtitle>
+                                  
+                                  <v-data-table
+                                  :headers="headersRefacciones"
+                                  :items="item.listRefaccion"
+                                  locale="es"
+                                  class="elevation-1"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  
+                                  <v-list-item-subtitle><h3>Herramientas</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersHerramienta"
+                                  :items="item.listHerramienta"
+                                  hide-default-footer
+                                  class="elevation-1"
+                                  locale="es"
+                                  ></v-data-table>
+                                <!-- -->
+                                  <v-list-item-subtitle><h3>Mecanicos</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersMecanicos"
+                                  :items="item.listMecanicos"
+                                  hide-default-footer
+                                  class="elevation-1"
+                                  locale="es"
+                                  ></v-data-table>  
+
+                                  </v-col>
+                              </v-row>    
+                              </v-card>
+                              
+                      
+                        
+                      <v-card
+                        color="yellow"                
+                        v-if="item.Estatus === '2'"
+                      >
+                          
+                          <v-list-item-title class="headline mb-1">{{item.FolioOrden}} {{item.estatusAMostrar}} / {{item.nombre_rutina}} </v-list-item-title>
+                                  
+                                 <v-list-item-subtitle><b>Folio:</b>  {{item.FolioOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Vehículo/Mantenible:</b>  {{item.mantenible_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Interno:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Interno:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Externo:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Externo:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Rutina:</b>  {{item.nombre_rutina}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Sucursal:</b>  {{item.sucursal_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Estatus de la Orden:</b> {{item.estatusOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Recepción:</b>  {{item.FechaRecepcionMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Salida:</b>  {{item.FechaSalidaMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Observaciones:</b>  {{item.Observaciones}}</v-list-item-subtitle><v-list-item-subtitle><h3>Refacciones</h3></v-list-item-subtitle>
+                                  
+                                  <v-data-table
+                                  :headers="headersRefacciones"
+                                  :items="item.listRefaccion"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  
+                                  <v-list-item-subtitle><h3>Herramientas</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersHerramienta"
+                                  :items="item.listHerramienta"
+                                  class="elevation-1"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  <!-- -->
+                                  <v-list-item-subtitle><h3>Mecanicos</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersMecanicos"
+                                  :items="item.listMecanicos"
+                                  hide-default-footer
+                                  class="elevation-1"
+                                  locale="es"
+                                  ></v-data-table>
+                                  
+                      </v-card>
+                      <v-card
+                        color="red lighten-1"                
+                        v-if="item.Estatus === '3'"
+                      >
+                          
+                          <v-list-item-title class="headline mb-1">{{item.FolioOrden}} {{item.estatusAMostrar}} / {{item.nombre_rutina}} </v-list-item-title>
+                                  
+                                 <v-list-item-subtitle><b>Folio:</b>  {{item.FolioOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Vehículo/Mantenible:</b>  {{item.mantenible_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Interno:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Interno:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Externo:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Externo:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Rutina:</b>  {{item.nombre_rutina}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Sucursal:</b>  {{item.sucursal_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Estatus de la Orden:</b> {{item.estatusOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Recepción:</b>  {{item.FechaRecepcionMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Salida:</b>  {{item.FechaSalidaMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Observaciones:</b>  {{item.Observaciones}}</v-list-item-subtitle><v-list-item-subtitle><h3>Refacciones</h3></v-list-item-subtitle>
+                                  
+                                  <v-data-table
+                                  :headers="headersRefacciones"
+                                  :items="item.listRefaccion"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  
+                                  <v-list-item-subtitle><h3>Herramientas</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersHerramienta"
+                                  :items="item.listHerramienta"
+                                  class="elevation-1"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  <!-- -->
+                                  <v-list-item-subtitle><h3>Mecanicos</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersMecanicos"
+                                  :items="item.listMecanicos"
+                                  hide-default-footer
+                                  class="elevation-1"
+                                  locale="es"
+                                  ></v-data-table>
+                                  
+                          
+                      </v-card>
+
+                      <v-card
+                        color="green"                
+                        v-if="item.Estatus === '4'"
+                      >
+                          
+                          <v-list-item-title class="headline mb-1">{{item.FolioOrden}}  {{item.estatusAMostrar}} / {{item.nombre_rutina}} </v-list-item-title>
+                                  
+                                  <v-list-item-subtitle><b>Folio:</b>  {{item.FolioOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Vehículo/Mantenible:</b>  {{item.mantenible_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Interno:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Interno:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Externo:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Externo:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Rutina:</b>  {{item.nombre_rutina}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Sucursal:</b>  {{item.sucursal_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Estatus de la Orden:</b> {{item.estatusOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Recepción:</b>  {{item.FechaRecepcionMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Salida:</b>  {{item.FechaSalidaMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Observaciones:</b>  {{item.Observaciones}}</v-list-item-subtitle><v-list-item-subtitle><h3>Refacciones</h3></v-list-item-subtitle>
+                                  
+                                  <v-data-table
+                                  :headers="headersRefacciones"
+                                  :items="item.listRefaccion"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  
+                                  <v-list-item-subtitle><h3>Herramientas</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersHerramienta"
+                                  :items="item.listHerramienta"
+                                  class="elevation-1"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  <!-- -->
+                                  <v-list-item-subtitle><h3>Mecanicos</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersMecanicos"
+                                  :items="item.listMecanicos"
+                                  hide-default-footer
+                                  class="elevation-1"
+                                  locale="es"
+                                  ></v-data-table>
+                                  
+                      </v-card>
+
+                      <v-card
+                        color="orange"                
+                        v-if="item.Estatus === '5'"
+                      >
+                          
+                          <v-list-item-title class="headline mb-1">{{item.FolioOrden}} {{item.estatusAMostrar}} / {{item.nombre_rutina}} </v-list-item-title>
+                                  
+                                  <v-list-item-subtitle><b>Folio:</b>  {{item.FolioOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Vehículo/Mantenible:</b>  {{item.mantenible_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Interno:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Interno:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 1"><b>Taler Externo:</b>  NO </v-list-item-subtitle>
+                                  <v-list-item-subtitle v-if="item.TallerInterno = 0"><b>Taler Externo:</b>  SI </v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Rutina:</b>  {{item.nombre_rutina}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Sucursal:</b>  {{item.sucursal_nombre}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Estatus de la Orden:</b> {{item.estatusOrden}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Recepción:</b>  {{item.FechaRecepcionMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>F. Salida:</b>  {{item.FechaSalidaMostrar}}</v-list-item-subtitle>
+                                  <v-list-item-subtitle><b>Observaciones:</b>  {{item.Observaciones}}</v-list-item-subtitle><v-list-item-subtitle><h3>Refacciones</h3></v-list-item-subtitle>
+                                  
+                                  <v-data-table
+                                  :headers="headersRefacciones"
+                                  :items="item.listRefaccion"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  
+                                  <v-list-item-subtitle><h3>Herramientas</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersHerramienta"
+                                  :items="item.listHerramienta"
+                                  class="elevation-1"
+                                  hide-default-footer
+                                  ></v-data-table>
+                                  <!-- -->
+                                  <v-list-item-subtitle><h3>Mecanicos</h3></v-list-item-subtitle>
+                                  <v-data-table
+                                  :headers="headersMecanicos"
+                                  :items="item.listMecanicos"
+                                  hide-default-footer
+                                  class="elevation-1"
+                                  locale="es"
+                                  ></v-data-table>
+                                  
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                   
+                  
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="primary"
+                    text
+                    @click="dialogProyectadas = false"
+                  >
+                    Aceptar
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+                
+            </v-dialog>
+
+
+
       </v-layout>
       <!-- page -->
     </v-flex>
   </v-layout>
+  
 </template>
 <script>
-  import vSelect from 'vue-select-rair'
+  import vSelect from 'vue-select'
   import unirest from 'unirest'
   import XLSX from 'xlsx'
+  import Vue from 'vue'
+ 
+let variableX;
 export default {
   components: {
     vSelect,
-    XLSX
+    XLSX,
+    Vue 
   },
   data () {
     return {
-      informaciondummy: [],
+      tablaaimprimir:"",
+      dialogProyectadas:false,
+      cuerpomasservicios: "",
+      objServiciosSeleccionados:[],
+      FechaSeleccionada:"",
+      headersRefacciones: [
+          {
+            text: 'Cantidad',
+            align: 'center',
+            sortable: false,
+            value: 'cantidadArticulo',
+          },
+          { text: 'Código', value: 'articulocodigo' },
+          { text: 'Nombre', value: 'nombrearticulo' }
+      ],
+      headersHerramienta:[
+        {
+            text: 'Cantidad',
+            align: 'center',
+            sortable: false,
+            value: 'cantidadHerramienta',
+          },
+          { text: 'Código', value: 'HerramientaCodigo' },
+          { text: 'Nombre', value: 'HerramientaNombre' }
+      ],
+      headersMecanicos:[
+        {
+            text: 'Nombre Mecanico',
+            align: 'center',
+            sortable: false,
+            value: 'NombreMecanico',
+          },
+          { text: 'Sueldo', value: 'SueldoMecanico' }
+      ],
+      informaciondummy: [
+        
+            {
+            "sucursal_id": 1608,
+            "sucursal_nombre": "Corporativo",
+            "mantenible_id": 9806,
+            "mantenible_nombre": "VHKF102020",
+            "FechaRecepcion": "1899-12-30T10:00:00",
+            "FechaSalida": "2020-06-20T13:00:00",
+            "FechaRecepcionMostrar": "2020-10-29T00:00",
+            "FechaSalidaMostrar": "2020-10-29T00:00",
+            "rutinaid": 114,
+            "nombre_rutina": "Rutina DEMO INMSO",
+            "ordenservicioid": 7135,
+            "Estatus": "4",
+            "estatusOrden": "Atendida",
+            "estatusAMostrar": "Finalizada ",
+            "Folio": "91/2020",
+            "FolioOrden": "        91/2020",
+            "estatusordenid": null,
+            "listRefaccion": [
+                {
+                    "RutinaRefaccionID": null,
+                    "RutinaID": null,
+                    "ArticuloID": 6890,
+                    "Precio": null,
+                    "cantidadArticulo": 1.0,
+                    "LocalizadorID": null,
+                    "articulocodigo": "AKF001",
+                    "nombrearticulo": "Aceite Multigrado Kananfleet",
+                    "CodigoAlmacen": "01"
+                }
+            ],
+            "listHerramienta": [
+                {
+                    "RutinaHerramientaID": null,
+                    "RutinaID": null,
+                    "ArticuloID": 6822,
+                    "HerramientaCodigo": "HKF01",
+                    "HerramientaNombre": "Desarmador plano",
+                    "cantidadHerramienta": 1.0
+                }
+            ],
+            "recurrencia_dias_servicio": 0,
+            "listMecanicos": [
+                {
+                    "RutinaMecanicosID": 75,
+                    "RutinaID": null,
+                    "EmpleadoID": 7328,
+                    "SueldoMecanico": 215.0000,
+                    "NombreMecanico": "Administrador 93 SAP"
+                }
+            ]
+        },{
+            "sucursal_id": 1600,
+            "sucursal_nombre": "Proyecto San Julián - Fresnillo PLC",
+            "mantenible_id": 9896,
+            "mantenible_nombre": "PI-07",
+            "FechaRecepcion": "2020-10-30T00:00",
+            "FechaSalida": "2020-10-30T00:00",
+            "rutinaid": 247,
+            "nombre_rutina": "Rutina KFPI",
+            "ordenservicioid": 7134,
+            "Estatus": "3",
+            "estatusOrden": "Solicitada",
+            "Folio": "20",
+            "FolioOrden": "        20/2020",
+            "estatusordenid": null,
+            "listRefaccion": [],
+            "listHerramienta": [],
+            "listMecanicos":[
+              {
+                    "RutinaMecanicosID": 75,
+                    "RutinaID": null,
+                    "EmpleadoID": 7328,
+                    "SueldoMecanico": 215.0000,
+                    "NombreMecanico": "Administrador 93 SAP"
+                }
+            ],
+            "recurrencia_dias_servicio": 0
+            
+        },
+        {
+            "sucursal_id": 1600,
+            "sucursal_nombre": "Proyecto San Julián - Fresnillo PLC",
+            "mantenible_id": 9896,
+            "mantenible_nombre": "PI-07",
+            "FechaRecepcion": "2020-10-30T00:00",
+            "FechaSalida": "2020-10-30T00:00",
+            "rutinaid": 247,
+            "nombre_rutina": "Rutina KFPI",
+            "ordenservicioid": 7134,
+            "Estatus": "3",
+            "estatusOrden": "Solicitada",
+            "Folio": "20",
+            "FolioOrden": "        20/2020",
+            "estatusordenid": null,
+            "listRefaccion": [],
+            "listHerramienta": [],
+            "listMecanicos":[
+              {
+                    "RutinaMecanicosID": 75,
+                    "RutinaID": null,
+                    "EmpleadoID": 7328,
+                    "SueldoMecanico": 215.0000,
+                    "NombreMecanico": "Administrador 93 SAP"
+                }
+            ],
+            "recurrencia_dias_servicio": 0
+            
+        },
+        {
+            "sucursal_id": 1600,
+            "sucursal_nombre": "Proyecto San Julián - Fresnillo PLC",
+            "mantenible_id": 9896,
+            "mantenible_nombre": "PI-07",
+            "FechaRecepcion": "2020-10-30T00:00",
+            "FechaSalida": "2020-10-30T00:00",
+            "rutinaid": 247,
+            "nombre_rutina": "Rutina KFPI",
+            "ordenservicioid": 7134,
+            "Estatus": "3",
+            "estatusOrden": "Solicitada",
+            "Folio": "20",
+            "FolioOrden": "        20/2020",
+            "estatusordenid": null,
+            "listRefaccion": [],
+            "listHerramienta": [],
+            "listMecanicos":[
+              {
+                    "RutinaMecanicosID": 75,
+                    "RutinaID": null,
+                    "EmpleadoID": 7328,
+                    "SueldoMecanico": 215.0000,
+                    "NombreMecanico": "Administrador 93 SAP"
+                }
+            ],
+            "recurrencia_dias_servicio": 0
+            
+        },
+        {
+            "sucursal_id": 1600,
+            "sucursal_nombre": "Proyecto San Julián - Fresnillo PLC",
+            "mantenible_id": 9896,
+            "mantenible_nombre": "PI-07",
+            "FechaRecepcion": "2020-10-30T00:00",
+            "FechaSalida": "2020-10-30T00:00",
+            "rutinaid": 247,
+            "nombre_rutina": "Rutina KFPI",
+            "ordenservicioid": 7134,
+            "Estatus": "3",
+            "estatusOrden": "Solicitada",
+            "Folio": "20",
+            "FolioOrden": "        20/2020",
+            "estatusordenid": null,
+            "listRefaccion": [],
+            "listHerramienta": [],
+            "listMecanicos":[
+              {
+                    "RutinaMecanicosID": 75,
+                    "RutinaID": null,
+                    "EmpleadoID": 7328,
+                    "SueldoMecanico": 215.0000,
+                    "NombreMecanico": "Administrador 93 SAP"
+                }
+            ],
+            "recurrencia_dias_servicio": 0
+            
+        },
+        {
+            "sucursal_id": 1600,
+            "sucursal_nombre": "Proyecto San Julián - Fresnillo PLC",
+            "mantenible_id": 9896,
+            "mantenible_nombre": "PI-07",
+            "FechaRecepcion": "2020-10-30T00:00",
+            "FechaSalida": "2020-10-30T00:00",
+            "rutinaid": 247,
+            "nombre_rutina": "Rutina KFPI",
+            "ordenservicioid": 7134,
+            "Estatus": "3",
+            "estatusOrden": "Solicitada",
+            "Folio": "20",
+            "FolioOrden": "        20/2020",
+            "estatusordenid": null,
+            "listRefaccion": [],
+            "listHerramienta": [],
+            "listMecanicos":[
+              {
+                    "RutinaMecanicosID": 75,
+                    "RutinaID": null,
+                    "EmpleadoID": 7328,
+                    "SueldoMecanico": 215.0000,
+                    "NombreMecanico": "Administrador 93 SAP"
+                },
+                {
+                    "RutinaMecanicosID": 75,
+                    "RutinaID": null,
+                    "EmpleadoID": 7328,
+                    "SueldoMecanico": 215.0000,
+                    "NombreMecanico": "Administrador 93 SAP 2"
+                },
+                {
+                    "RutinaMecanicosID": 75,
+                    "RutinaID": null,
+                    "EmpleadoID": 7328,
+                    "SueldoMecanico": 215.0000,
+                    "NombreMecanico": "Administrador 93 SAP 3"
+                }
+            ],
+            "recurrencia_dias_servicio": 0
+            
+        },
+      ],
       ReporteExcel: [],
       title_Page: 'Reportes',
       modelSelectMante: [],
@@ -240,11 +835,16 @@ export default {
       modelSelectTMant: [],
       dataSelectTMant: [],
       modelSelect: [],
-      modelSelectEstatico:[],
+      modelSelectEstatico:"Todo",
       selectSucursal: [],
       selectEstatus:[],
       modelSelectTMmnto: [],
       dataSelectTmmnto: [],
+     /**/ modelNoEconomico:"",
+      modelNoOS:"",
+      modelPlaca:"",
+      FInicioModel:"",
+      FFinalModel:"",
       valid: false,
       mfechaEdit: false,
       fcalendarEdit: new Date().toISOString().substr(0, 10),
@@ -296,6 +896,10 @@ export default {
     }
   },
   methods: {
+    
+    funcionEjy:function funcionEj(){
+      this.pdfseleccionado();
+    },
     onGridReady (params) {
       console.log('onGridReady')
       this.gridApi = params.api
@@ -376,7 +980,8 @@ export default {
       console.log('function: getDataArr(). ')
 
       // Recupera sucursales
-      unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarSucursales')
+      unirest('POST', 'http://webapiandroidtest.administraflotilla.com//api/Reportes/ConsultarSucursales')
+      //unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarSucursales')
         .send({ 'EmpresaID': vm.getEmpresa() })
         .end(function (res) {
           if (res.error) {
@@ -390,7 +995,8 @@ export default {
         })
 
       // Recupera tipo de vehículos
-      unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarTipoVehiculos')
+      unirest('POST', 'http://webapiandroidtest.administraflotilla.com//api/Reportes/ConsultarTipoVehiculos')
+      //unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarSucursales')
         .send({ 'EmpresaID': vm.getEmpresa() })
         .end(function (res) {
           if (res.error) {
@@ -404,7 +1010,8 @@ export default {
         })
 
       // Recupera tipo de vehículos
-      unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarMantenibles')
+      unirest('POST', 'http://webapiandroidtest.administraflotilla.com//api/Reportes/ConsultarMantenibles')
+      //unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarSucursales')
         .send({ 'EmpresaID': vm.getEmpresa() })
         .end(function (res) {
           if (res.error) {
@@ -419,25 +1026,36 @@ export default {
     },
     getGraficaDetalle () {
       const vm = this
-      console.log('function: getGraficaDetalle().')
-      const empresa = vm.getEmpresa()
-      const sucursal = vm.getSucursal()
-      const tipoMantenible = vm.getTipoMantenible()
-      const mantenible = vm.getMantenible()
-      const estatus = vm.getEstatus()
+      console.log('function: getGraficaDetalle().');
+      const empresa = vm.getEmpresa();
+      const sucursal = vm.getSucursal();
+      const tipoMantenible = vm.getTipoMantenible();
+      const mantenible = vm.getMantenible();
+      const estatus = vm.getEstatus();
+      const finicio = vm.FInicioModel;
+      const ffinal = vm.FFinalModel;
+      const noEconomico = vm.modelNoEconomico;
+      const placa = vm.modelPlaca;
+      const noOS = vm.modelNoOS;/**/
       /*console.log(empresa)
       console.log(sucursal)
       console.log(tipoMantenible)
       console.log(mantenible)*/
       vm.overlay = true
-      unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarReporteProximosServicios')
+        unirest('POST', 'http://webapiandroidtest.administraflotilla.com//api/Reportes/ConsultarReporteProximosServicios')
+        //unirest('POST','http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarReporteProximosServicios')
         .send({
           'EmpresaID': empresa,
           "sucursal_id": sucursal,
           "tipoMantenible_id": tipoMantenible,
           "tipomantenimientoid": 0,
           "estatus_id":estatus,
-          "mantenible_id":[ mantenible ]
+          "mantenible_id":[ mantenible ],
+          "FechaInicio":finicio ,
+          "FechaFin":ffinal,
+          "NoEco":noEconomico,
+          "Placa":placa,
+          "NoOS":noOS,
         }).end(function (res) {
         vm.overlay = false
           if (res.error) {
@@ -453,6 +1071,9 @@ export default {
           console.log('Arreglo: ')
           console.log(res.body)
         })
+/*        vm.rowData = vm.informaciondummy;
+        vm.generaCalendario()
+        vm.overlay = false*/
     },
     getEmpresa () {
       // const vm = this
@@ -474,22 +1095,14 @@ export default {
         }
       }
       
-      /*
-      for (let i = 0; i < vm.modelSelect.length; i++) {
-        if (dato === '') {
-          dato += vm.modelSelect[i].sucursal_id
-        } else {
-          dato += ',' + vm.modelSelect[i].sucursal_id
-        }
-      }
-      */
+      
       return dato
     },
     getEstatus () {
       const vm = this
       console.log('function: getEstatus(). ')
       let dato = 0
-      if (vm.modelSelectEstatico != null) {
+      if (vm.modelSelectEstatico != null && vm.modelSelectEstatico != "Todo") {
         if (vm.modelSelectEstatico.length > 0) {
           dato = vm.modelSelect.estatus_id
         }
@@ -509,15 +1122,7 @@ export default {
           dato = vm.modelSelectTMant[0].tipovehiculo_id
         }
       }
-      /*
-      for (let i = 0; i < vm.modelSelectTMant.length; i++) {
-        if (dato === '') {
-          dato += vm.modelSelectTMant[i].tipovehiculo_id
-        } else {
-          dato += ',' + vm.modelSelectTMant[i].tipovehiculo_id
-        }
-      }
-      */
+      
       return dato
     },
     getMantenible () {
@@ -540,24 +1145,25 @@ export default {
 
     /* Calendario */
     viewDay ({ date }) {
-      this.focus = date
-      this.type = 'day'
-    },
-    getEventColor (event) {
-      return event.color
-    },
-    setToday () {
-      this.focus = this.today
-    },
-    generaCalendario() {
-      let vm = this
-      console.log('function: generaCalendario(). ')
-      var color = ''
-      vm.events = []
-      if (vm.rowData == null) {
-        return
-      }
-      for (var i=0; i<vm.rowData.length; i++) {
+      /*this.focus = date
+      this.type = 'day'*/
+      vm = this;
+      vm.FechaSeleccionada =   date.substr(8,2)+"-"+date.substr(5,2)+"-"+date.substr(0,4);
+      console.log(vm.rowData);
+      console.log(vm.events);
+      console.log(date);
+      var finicial = new Date(date + "T00:00");
+      var ffinal = new Date(date + "T11:59");
+      var serviciosmostrados = "";
+      var color = "";
+      vm.overlay = true;
+      vm.objServiciosSeleccionados = [];
+      for (var i=0; i<vm.rowData.length; i++) 
+      {
+        if(date === vm.rowData[i].FechaRecepcion.substr(0,10))
+        { 
+     
+          vm.objServiciosSeleccionados.push(vm.rowData[i]);
         var fecha_arr = new Date(vm.rowData[i].FechaRecepcion)
         var fecha_arr2 = new Date(vm.rowData[i].FechaSalida)
         var SumaDias = 1; //parseInt(vm.rowData[i].recurrencia_dias_servicio)
@@ -571,9 +1177,14 @@ export default {
           var etiquetaestatus;
           var HoraInicio =  fecha_arr.toISOString().substr(0, 10) + " " + (fecha_arr.getHours()>9?fecha_arr.getHours(): "0"+fecha_arr.getHours()   )+ ":" + ( fecha_arr.getMinutes()>9? fecha_arr.getMinutes(): "0"+ fecha_arr.getMinutes()) ; //"2020-05-01 08:00";  //
           var HoraFin =  fecha_arr2.toISOString().substr(0, 10) + " " +  (fecha_arr2.getHours()>9?fecha_arr2.getHours(): "0"+fecha_arr2.getHours()   )+ ":" + (fecha_arr2.getMinutes()>9?fecha_arr2.getMinutes(): "0"+fecha_arr2.getMinutes() ); //"2020-05-01 10:00" ;//
-           console.log(i);
-          console.log(HoraInicio + " " + fecha_arr);
-          console.log(HoraFin + " " + fecha_arr2);
+          
+          var HoraInicioDisp =  fecha_arr.toISOString().substr(0, 4) +"-"+ fecha_arr.toISOString().substr(4, 2)+"-"+ fecha_arr.toISOString().substr(7, 2) + " " + (fecha_arr.getHours()>9?fecha_arr.getHours(): "0"+fecha_arr.getHours()   )+ ":" + ( fecha_arr.getMinutes()>9? fecha_arr.getMinutes(): "0"+ fecha_arr.getMinutes()) ; //"2020-05-01 08:00";  //
+          var HoraFinDisp =  fecha_arr2.toISOString().substr(0, 4) +"-"+ fecha_arr2.toISOString().substr(4, 2)+"-"+ fecha_arr2.toISOString().substr(7, 2) + " " +  (fecha_arr2.getHours()>9?fecha_arr2.getHours(): "0"+fecha_arr2.getHours()   )+ ":" + (fecha_arr2.getMinutes()>9?fecha_arr2.getMinutes(): "0"+fecha_arr2.getMinutes() ); //"2020-05-01 10:00" ;//
+          
+
+          //console.log(i);
+          //console.log(HoraInicio + " " + fecha_arr);
+          //console.log(HoraFin + " " + fecha_arr2);
           
           switch (vm.rowData[i].Estatus) {
             case "1":
@@ -611,12 +1222,13 @@ export default {
               herramienta += "<tr><td><center>" + vm.rowData[i].listHerramienta[j].cantidadHerramienta + "</center></td><td>" + vm.rowData[i].listHerramienta[j].HerramientaCodigo + "</td><td>" + vm.rowData[i].listHerramienta[j].HerramientaNombre + "</td> ";
           }
 
-          vm.events.push({
-            name: vm.rowData[i].FolioOrden + "-" + etiquetaestatus ,
-            start: HoraInicio,
-            end: HoraFin,
-            color: color,
-            details: "<b>Folio: </b><br>" + vm.rowData[i].FolioOrden + "<br>" +
+          var mecanicos = "";
+          /**/for(var j=0; j<vm.rowData[i].listMecanicos.length; j++)
+          {
+              mecanicos += "<tr><td><center>" + vm.rowData[i].listMecanicos[j].NombreMecanico + "</center></td><td>" + vm.rowData[i].listMecanicos[j].SueldoMecanico + "</td>";
+          }
+          console.log(i);
+           serviciosmostrados += "<b>Folio: </b><br>" + vm.rowData[i].FolioOrden + "<br>" +
                       "<b>Vehículo/Mantenible:</b><br>"  +
                        vm.rowData[i].mantenible_nombre + 
                       "<br><b>Rutina:</b> <br>" + 
@@ -626,21 +1238,180 @@ export default {
                       "<b>Estatus de la Orden:</b> <br>" + 
                       vm.rowData[i].estatusOrden + "<br>" + 
                       "<b>F. Recepción:</b> <br>" + 
-                      HoraInicio + " <br>" +
+                      vm.rowData[i].FechaRecepcionMostrar + " <br>" +
                       "<b>F. Salida:</b> <br>" +
                       //vm.rowData[i].FechaSAlida.toISOString().substr(0, 10) + " " +  (vm.rowData[i].FechaSAlida.getHours()>9?vm.rowData[i].FechaSAlida.getHours(): "0"+vm.rowData[i].FechaSAlida.getHours()   )+ ":" + vm.rowData[i].FechaSAlida.getMinutes() + "<br>" + 
-                      HoraFin + " <br>" +
+                      vm.rowData[i].HoraFinDisp + " <br>" +
+                      "<b>Observaciones:</b> <br>" +
+                      //vm.rowData[i].FechaSAlida.toISOString().substr(0, 10) + " " +  (vm.rowData[i].FechaSAlida.getHours()>9?vm.rowData[i].FechaSAlida.getHours(): "0"+vm.rowData[i].FechaSAlida.getHours()   )+ ":" + vm.rowData[i].FechaSAlida.getMinutes() + "<br>" + 
+                      vm.rowData[i].Observaciones + " <br>" +
                       "<br> <b>Refacciones: </b> <br>" + 
                       "<table  border='1' cellspacing='0' cellpadding='1' align='center'> <tr bgcolor='" + color + "'  > <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+refacciones+"</table>" + 
                       "<br> <b>Herramientas: </b> <br>" + 
-                      "<table border='1' cellspacing='0' cellpadding='1' align='center' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+herramienta+"</table>"
+                      "<table border='1' cellspacing='0' cellpadding='1' align='center' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+herramienta+"</table>" 
+                      /**/+
+                      "<br> <b>Mecanicos: </b> <br>" + 
+                      "<table border='1' cellspacing='0' cellpadding='1' align='center' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Nombre Mecánico </th> <th style='color:#FFFFFF';> Sueldo </th> </tr>"+mecanicos+"</table>";
+
+          
+          //var FechaWhile = new Date(fecha_arr).toISOString().substr(0, 10)
+          StringPro = fecha_arr.toISOString().substr(0, 4)
+          AnioPro = parseInt(StringPro)
+        //}
+      }
+      }
+      
+
+      vm.overlay = false;
+
+      console.log(vm.objServiciosSeleccionados);
+      //alert(serviciosmostrados);
+      vm.cuerpomasservicios = serviciosmostrados
+      vm.dialogProyectadas=true;
+        },
+    eventoDia({day})
+    {
+      console.log(day);
+    },
+    getEventColor (event) {
+      return event.color
+    },
+    setToday () {
+      this.focus = this.today
+    },
+    generaCalendario() {
+      let vm = this
+      console.log('function: generaCalendario(). ')
+      var color = ''
+      vm.events = []
+      if (vm.rowData == null) {
+        return
+      }
+      for (var i=0; i<vm.rowData.length; i++) {
+        var fecha_arr = new Date(vm.rowData[i].FechaRecepcion)
+        var fecha_arr2 = new Date(vm.rowData[i].FechaSalida)
+        var SumaDias = 1; //parseInt(vm.rowData[i].recurrencia_dias_servicio)
+        var StringAnio = new Date().toISOString().substr(0, 4)
+        var StringPro = fecha_arr.toISOString().substr(0, 4)
+        var AnioAhora = parseInt(StringAnio)
+        AnioAhora = AnioAhora + 1
+        var AnioPro = parseInt(StringPro)
+        //while (AnioAhora >= AnioPro) {
+          //fecha_arr.setDate(fecha_arr.getDate() );
+          var etiquetaestatus;
+          var HoraInicio =  fecha_arr.toISOString().substr(0, 10) + " " + (fecha_arr.getHours()>9?fecha_arr.getHours(): "0"+fecha_arr.getHours()   )+ ":" + ( fecha_arr.getMinutes()>9? fecha_arr.getMinutes(): "0"+ fecha_arr.getMinutes()) ; //"2020-05-01 08:00";  //
+          var HoraFin =  fecha_arr2.toISOString().substr(0, 10) + " " +  (fecha_arr2.getHours()>9?fecha_arr2.getHours(): "0"+fecha_arr2.getHours()   )+ ":" + (fecha_arr2.getMinutes()>9?fecha_arr2.getMinutes(): "0"+fecha_arr2.getMinutes() ); //"2020-05-01 10:00" ;//
+          
+          var HoraInicioDisp =  fecha_arr.toISOString().substr(8, 2) +"-"+ fecha_arr.toISOString().substr(5, 2)+"-"+ fecha_arr.toISOString().substr(0, 4) + " " + (fecha_arr.getHours()>9?fecha_arr.getHours(): "0"+fecha_arr.getHours()   )+ ":" + ( fecha_arr.getMinutes()>9? fecha_arr.getMinutes(): "0"+ fecha_arr.getMinutes()) ; //"2020-05-01 08:00";  //
+          var HoraFinDisp =  fecha_arr2.toISOString().substr(8, 2) +"-"+ fecha_arr2.toISOString().substr(5, 2)+"-"+ fecha_arr2.toISOString().substr(0, 4) + " " +  (fecha_arr2.getHours()>9?fecha_arr2.getHours(): "0"+fecha_arr2.getHours()   )+ ":" + (fecha_arr2.getMinutes()>9?fecha_arr2.getMinutes(): "0"+fecha_arr2.getMinutes() ); //"2020-05-01 10:00" ;//
+           
+          switch (vm.rowData[i].Estatus) {
+            case "1":
+              color = 'cyan'  // Programado
+              etiquetaestatus = "Programado";
+              break
+            case "2":
+              color = 'yellow' // En proceso
+              etiquetaestatus = "En Proceso (En tiempo)";
+              break
+            case "3":
+              color = 'red lighten-1' // 
+              etiquetaestatus = "Pasado de Fecha";
+              break
+            case "4":
+              color = 'green'
+              etiquetaestatus = "En Tiempo y Forma";
+              break
+            case "5":
+              color = 'orange'
+              etiquetaestatus = "En Proceso (Con Retraso)";
+              break
+             
+          }
+          // Validar que se no se repitan los colores rojos
+          var refacciones = "";
+          for(var j=0; j<vm.rowData[i].listRefaccion.length; j++)
+          {
+              refacciones += "<tr><td><center>" + vm.rowData[i].listRefaccion[j].cantidadArticulo + "</center></td><td>" + vm.rowData[i].listRefaccion[j].articulocodigo + "</td><td>" + vm.rowData[i].listRefaccion[j].nombrearticulo + "</td> ";
+          }
+
+          var herramienta = "";
+          for(var j=0; j<vm.rowData[i].listHerramienta.length; j++)
+          {
+              herramienta += "<tr><td><center>" + vm.rowData[i].listHerramienta[j].cantidadHerramienta + "</center></td><td>" + vm.rowData[i].listHerramienta[j].HerramientaCodigo + "</td><td>" + vm.rowData[i].listHerramienta[j].HerramientaNombre + "</td> ";
+          }
+
+          var mecanicos = "";
+          for(var j=0; j<vm.rowData[i].listMecanicos.length; j++)
+          {
+              mecanicos += "<tr><td><center>" + vm.rowData[i].listMecanicos[j].NombreMecanico + "</center></td>";
+          }
+
+          var titulo = "";
+          if(vm.rowData[i].estatusOrden == 1)
+            titulo = vm.rowData[i].FolioOrden + " " + vm.rowData[i].estatusAMostrar + " / " + vm.rowData[i].nombre_rutina
+          else
+            titulo = vm.rowData[i].estatusAMostrar + " / " + vm.rowData[i].nombre_rutina
+          var proveedor = "";
+           
+          if(vm.rowData[i].TallerInterno=="1")
+            proveedor = "";
+          else
+            proveedor = "<br><b>Proveedor:</b> <br>" + vm.rowData[i].proveedor + "<br>";
+
+          //var encabezado  ="<table width='100%'   ><tr height='15%'>  <td colspan='2' width='70%'><font face='Arial' size='3'>REPORTE ESTATUS ORDEN DE SERVICIO (O.S.) / PRÓXIMOS SERVICIOS</font></td> <td  aling='right'> <div style='text-align: right;'> <img src='/logo.png' width='40%' max-height='15%' alt='Logo Kananfleet'></div> </td> </tr></table>";
+          //var piepagina  ="<table  style='font-family:Arial, Courier, monospace; font-size:50%' ><tr height='15%'>  <td   >Aministrador de Flotillas Kananfleet<br>Powered by Etecno</td><td  width='30%'>&nbsp;</td><td width='30%' aling='right'>   </td> </tr></table>";  
+
+          vm.events.push({
+            name: titulo,// vm.rowData[i].FolioOrden + " " + vm.rowData[i].estatusAMostrar + " / " + vm.rowData[i].nombre_rutina ,
+            start: HoraInicio,
+            end: HoraFin,
+            color: color,
+            details: "<font face='Arial' size='2'>  <b>Folio: </b><br>" + vm.rowData[i].FolioOrden + "<br>" +
+                     "<b>Vehículo/Mantenible:</b><br>"  +
+                      vm.rowData[i].mantenible_nombre + "<br>" +
+                      "<b>Taller interno:</b> <br>" +                      
+                      (vm.rowData[i].TallerInterno=="1"?"SI":"NO") + " <br>" +
+                       "<b>Taller externo:</b> <br>" +                      
+                      (vm.rowData[i].TallerInterno=="0"?"SI":"NO") + " <br>" +
+                      proveedor +
+                      "<b>Rutina:</b> <br>" +                       
+                      vm.rowData[i].nombre_rutina + "<br>" + 
+                      "<b>Sucursal:</b> <br>" + 
+                      vm.rowData[i].sucursal_nombre + "<br>" + 
+                      "<b>Estatus de la Orden:</b> <br>" + 
+                      vm.rowData[i].estatusOrden + "<br>" + 
+                      "<b>F. Recepción:</b> <br>" + 
+                      HoraInicioDisp + " <br>" +
+                      "<b>F. Salida:</b> <br>" +                      
+                      //vm.rowData[i].FechaSAlida.toISOString().substr(0, 10) + " " +  (vm.rowData[i].FechaSAlida.getHours()>9?vm.rowData[i].FechaSAlida.getHours(): "0"+vm.rowData[i].FechaSAlida.getHours()   )+ ":" + vm.rowData[i].FechaSAlida.getMinutes() + "<br>" + 
+                      HoraFinDisp + " <br>" +
+                      "<b>Observaciones:</b> <br>" +                      
+                      vm.rowData[i].Observaciones + " <br>" +
+                      "<table > <tr> <td>" +
+                      "<br> <b>Refacciones/Repuestos: </b> <br>" + 
+                      " </td></tr>  <tr> <td> " +
+                      "<table  border='1' cellspacing='0' cellpadding='1' align='left'> <tr bgcolor='" + color + "'  > <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+refacciones+"</table>" + 
+                      " </td></tr>  <tr> <td> " +
+                      "<br> <b>Herramientas: </b> <br>" +
+                      " </td></tr>  <tr> <td> " + 
+                      "<table border='1' cellspacing='0' cellpadding='1' align='left' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+herramienta+"</table>" +
+                      " </td></tr>  <tr> <td> " + 
+                      "<br> <b>Mecánicos: </b> <br>" + 
+                      " </td></tr>  <tr> <td> " +
+                      "<table border='1' cellspacing='0' cellpadding='1' align='left' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Nombre Mecánico </th> <th style='color:#FFFFFF';> Sueldo </th> </tr>"+mecanicos+"</table>"    +
+                      " </td></tr>  </table> </font>" +
+                      "<table> <tr bgcolor='" + color + "'> <td background="+color+" > " + etiquetaestatus +"  </td> </tr> </table>"
+                      
+                      
           })
           //var FechaWhile = new Date(fecha_arr).toISOString().substr(0, 10)
           StringPro = fecha_arr.toISOString().substr(0, 4)
           AnioPro = parseInt(StringPro)
         //}
       }
-      console.log(vm.events)
+      //console.log(vm.events)
+      //console.log(vm.rowData);
     },
     procesarArchivoExcel( )
     {
@@ -649,6 +1420,7 @@ export default {
       const sucursal = vm.getSucursal()
       const tipoMantenible = vm.getTipoMantenible()
       const mantenible = vm.getMantenible()
+      const estatus = vm.getEstatus();
       var meses = ["ENERO","FEBRERO","MARZO","ABRIL", "MAYO", "JUNIO", "JULIO","AGOSTO","SEPTIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
       vm.ReporteExcel = [];
       /*console.log(empresa)
@@ -656,12 +1428,14 @@ export default {
       console.log(tipoMantenible)
       console.log(mantenible)*/
       vm.overlay = true
-      unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarReporteProximosServicios')
+      unirest('POST', 'http://webapiandroidtest.administraflotilla.com//api/Reportes/ConsultarReporteProximosServicios')
+      //unirest('POST', 'http://webapiandroidtest.administraflotilla.com/api/Reportes/ConsultarReporteProximosServicios')
         .send({
           'EmpresaID': empresa,
           "sucursal_id": sucursal,
           "tipoMantenible_id": tipoMantenible,
           "tipomantenimientoid": 0,
+          "estatus_id":estatus,
           "mantenible_id":[ mantenible ]
         }).end(function (res) {
         vm.overlay = false
@@ -678,41 +1452,52 @@ export default {
           var mes = fechaparames.getMonth() + 1;
           var dia = fechaparames.getDate();
           var anio = fechaparames.getFullYear();
-          var fechadiahoy = new Date(anio,mes,dia);
+          var fechadiahoy = new Date(anio,mes-1,dia); 
+
           for (var i=0; i<vm.rowData.length; i++) {
             var fecha_evento = new Date(vm.rowData[i].FechaRecepcion)
             var anioEvento = fecha_evento.toISOString().substr(0, 4);
             var mesEvento = fecha_evento.toISOString().substr(5, 2);
-            var diaEvento = fecha_evento.toISOString().substr(7, 2);
-            var fechaEvento =  new Date(anioEvento, mesEvento, diaEvento);
-             
+            var diaEvento = fecha_evento.toISOString().substr(8, 2);
+            var fechaEvento =  new Date(anioEvento, mesEvento - 1, diaEvento);
+            console.log("Registros: " + vm.rowData[i].listRefaccion.length);
             for(var j=0; j<vm.rowData[i].listRefaccion.length; j++)
             {
+              console.log(fechaEvento >= fechadiahoy);
               if(fechaEvento>= fechadiahoy)
               {
                 let articulo = {
                   "NumeroArticulo":vm.rowData[i].listRefaccion[j].articulocodigo ,
                   "Descripcion":vm.rowData[i].listRefaccion[j].nombrearticulo ,
-                  "Almacen":vm.rowData[i].listRefaccion[j].almacenSAP
+                  "Almacen":vm.rowData[i].listRefaccion[j].CodigoAlmacen
                   
                 };
                 
-                const found = vm.ReporteExcel.find(element => element.NumeroArticulo == vm.rowData[i].listRefaccion[j].articulocodigo);
-                if(found == null)
+                const found = vm.ReporteExcel.find(element => element.NumeroArticulo == vm.rowData[i].listRefaccion[j].articulocodigo && vm.rowData[i].listRefaccion[j].CodigoAlmacen == element.Almacen);
+                console.log( "Encontrado " + found);
+                 if(found == null)
                 {
-                  for(var k=parseInt(mes)  ; k <  parseInt(mes) + 6; k++)
+                  var mesarchivorecorriendo = 0;
+                  var t = 0;
+                  for(var k=parseInt(mes) + 1 ; k <  parseInt(mes) + 7; k++)
                   {
-                    
-                    if(k>12)
-                      if(k == parseInt(mesEvento -1))
-                        articulo[meses[k ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
-                      else
-                        articulo[meses[k ]] = 0;
+                    mesarchivorecorriendo = k;
+                    if(mesarchivorecorriendo>=12)                      
+                      if(mesarchivorecorriendo == 12)
+                        t = mesarchivorecorriendo - 1;
+                        //articulo[meses[mesarchivorecorriendo - 1]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
+                      else  
+                        t = mesarchivorecorriendo - 13;
+                        //articulo[meses[mesarchivorecorriendo - 13 ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;                        
                     else
-                      if(k == parseInt(mesEvento-1))
-                        articulo[meses[k ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
+                      t = mesarchivorecorriendo -1;
+                      //articulo[meses[mesarchivorecorriendo -1 ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
+                      console.log("Arreglo: "  + vm.rowData[i].listRefaccion[j].CodigoAlmacen);
+                      console.log("Articulo: "  + articulo["Almacen"]);
+                      if(t == parseInt(mesEvento)-1 && vm.rowData[i].listRefaccion[j].CodigoAlmacen == articulo["Almacen"]  )
+                        articulo[meses[t ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
                       else
-                        articulo[meses[k ]] = 0;
+                        articulo[meses[t ]] = 0;
                   }
                   vm.ReporteExcel.push(articulo);
                 }                  
@@ -724,10 +1509,13 @@ export default {
                     
                     if(vm.ReporteExcel[x].NumeroArticulo == vm.rowData[i].listRefaccion[j].articulocodigo )
                     {
-                       for(var y=parseInt(mes)    ; y < parseInt(mes) + 6; y++)
+                      var mesarchivorecorriendo = 0;
+                      for(var y=parseInt(mes)  + 1  ; y < parseInt(mes) + 7; y++)
                       {
- 
-                        if(y == parseInt(mesEvento)-1)
+                        mesarchivorecorriendo = y;
+                        /*
+                          //ORIGINAL
+                         if(y == parseInt(mesEvento)-1)
                         {
                           var c = 0;
                           c = vm.ReporteExcel[x][meses[y  ]];
@@ -736,6 +1524,35 @@ export default {
 
                         }
                         
+                        */
+                        if(mesarchivorecorriendo  >= 12)
+                        {
+                           var c = 0;
+                           var t = 0;
+                           if(mesarchivorecorriendo == 12)
+                           {
+                            //articulo[meses[]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
+                            t = mesarchivorecorriendo - 1 ;
+                            
+                           }                              
+                          else
+                          {
+                            //articulo[meses[mesarchivorecorriendo - 13 ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
+                            t = mesarchivorecorriendo - 13;
+                            //c = vm.ReporteExcel[x][meses[mesarchivorecorriendo - 13  ]];
+                          }   
+                        }
+                        else
+                        {
+                          t = mesarchivorecorriendo - 1;
+                          articulo[meses[mesarchivorecorriendo -1 ]] = vm.rowData[i].listRefaccion[j].cantidadArticulo;
+                        }
+                        if(t==parseInt(mesEvento) - 1 && vm.rowData[i].listRefaccion[j].CodigoAlmacen == articulo["Almacen"]  )
+                        {
+                          c = vm.ReporteExcel[x][meses[ t  ]];
+                          c += vm.rowData[i].listRefaccion[j].cantidadArticulo;                           
+                          vm.ReporteExcel[x][meses[t  ]] = c; 
+                        }
                       }
                     }
                 
@@ -776,6 +1593,172 @@ export default {
       XLSX.utils.book_append_sheet(workbook, data, filename)
       XLSX.writeFile(workbook, `${filename}.xlsx`)*/
     },
+    pdfseleccionado()
+    {
+      let vm = this      
+      console.log("Imprimirá el vm.selectedEvent");
+      vm.generapaginaos(vm.tablaaimprimir)
+      const newWin = window.open('')
+      newWin.document.write(vm.tablaaimprimir);
+      setTimeout(function () {
+        newWin.print()
+        newWin.close()
+      }, 550)
+    },
+    pdfseleccionados(){
+        //objServiciosSeleccionados
+        let vm = this
+      console.log('function: PDFseleccionado().')
+      if (vm.objServiciosSeleccionados.length === 0) {
+        vm.msjException = true
+        vm.msjAlerta = 'Debe de realizar una búsqueda para poder descargar el reporte'
+        return false
+      }
+      var headerTable = ''
+      var detalle = ''
+      var nombre = 'REPORTE ESTATUS O.S. / PRÓXIMOS SERVICIOS'
+
+      var formatoPrint = "";
+      var proveedor = "";
+      if(vm.objServiciosSeleccionados.length > 0) {
+        for(var i = 0; i < vm.objServiciosSeleccionados.length; i++) {
+          var fecha_arr = new Date(vm.objServiciosSeleccionados[i].FechaRecepcion)
+          var fecha_arr2 = new Date(vm.objServiciosSeleccionados[i].FechaSalida)
+          var SumaDias = 1; //parseInt(vm.rowData[i].recurrencia_dias_servicio)
+          var StringAnio = new Date().toISOString().substr(0, 4)
+          var StringPro = fecha_arr.toISOString().substr(0, 4)
+          var AnioAhora = parseInt(StringAnio)
+          AnioAhora = AnioAhora + 1
+          var AnioPro = parseInt(StringPro)
+          var refacciones = "";
+
+          var color = "";
+          var etiquetaestatus  = "";
+          switch (vm.objServiciosSeleccionados[i].Estatus) {
+            case "1":
+              color = 'cyan'  // Programado
+              etiquetaestatus = "Programado";
+              break
+            case "2":
+              color = 'yellow' // En proceso
+              etiquetaestatus = "En Proceso (En tiempo)";
+              break
+            case "3":
+              color = 'red lighten-1' // 
+              etiquetaestatus = "Pasado de Fecha";
+              break
+            case "4":
+              color = 'green'
+              etiquetaestatus = "En Tiempo y Forma";
+              break
+            case "5":
+              color = 'orange'
+              etiquetaestatus = "En Proceso (Con Retraso)";
+              break
+             
+          }
+
+
+          for(var j=0; j<vm.objServiciosSeleccionados[i].listRefaccion.length; j++)
+          {
+              refacciones += "<tr><td><center>" + vm.objServiciosSeleccionados[i].listRefaccion[j].cantidadArticulo + "</center></td><td>" + vm.objServiciosSeleccionados[i].listRefaccion[j].articulocodigo + "</td><td>" + vm.objServiciosSeleccionados[i].listRefaccion[j].nombrearticulo + "</td> </tr> ";
+          }
+
+          var herramienta = "";
+          for(var j=0; j<vm.objServiciosSeleccionados[i].listHerramienta.length; j++)
+          {
+              herramienta += "<tr><td><center>" + vm.objServiciosSeleccionados[i].listHerramienta[j].cantidadHerramienta + "</center></td><td>" + vm.objServiciosSeleccionados[i].listHerramienta[j].HerramientaCodigo + "</td><td>" + vm.objServiciosSeleccionados[i].listHerramienta[j].HerramientaNombre + "</td> </tr> ";
+          }
+
+          var mecanicos = "";
+          for(var j=0; j<vm.objServiciosSeleccionados[i].listMecanicos.length; j++)
+          {
+              mecanicos += "<tr><td><center>" + vm.objServiciosSeleccionados[i].listMecanicos[j].NombreMecanico + "</center></td></tr> ";
+          }
+
+          var titulo = "";
+
+          if(vm.objServiciosSeleccionados[i].TallerInterno=="1")
+            proveedor = "";
+          else
+            proveedor = "<br><b>Proveedor:</b> <br>" + vm.objServiciosSeleccionados[i].TallerInterno + "<br>";
+           
+          var HoraInicio =  fecha_arr.toISOString().substr(0, 10) + " " + (fecha_arr.getHours()>9?fecha_arr.getHours(): "0"+fecha_arr.getHours()   )+ ":" + ( fecha_arr.getMinutes()>9? fecha_arr.getMinutes(): "0"+ fecha_arr.getMinutes()) ; //"2020-05-01 08:00";  //
+          var HoraFin =  fecha_arr2.toISOString().substr(0, 10) + " " +  (fecha_arr2.getHours()>9?fecha_arr2.getHours(): "0"+fecha_arr2.getHours()   )+ ":" + (fecha_arr2.getMinutes()>9?fecha_arr2.getMinutes(): "0"+fecha_arr2.getMinutes() ); //"2020-05-01 10:00" ;//
+          
+          var HoraInicioDisp =  fecha_arr.toISOString().substr(8, 2) +"-"+ fecha_arr.toISOString().substr(5, 2)+"-"+ fecha_arr.toISOString().substr(0, 4) + " " + (fecha_arr.getHours()>9?fecha_arr.getHours(): "0"+fecha_arr.getHours()   )+ ":" + ( fecha_arr.getMinutes()>9? fecha_arr.getMinutes(): "0"+ fecha_arr.getMinutes()) ; //"2020-05-01 08:00";  //
+          var HoraFinDisp =  fecha_arr2.toISOString().substr(8, 2) +"-"+ fecha_arr2.toISOString().substr(5, 2)+"-"+ fecha_arr2.toISOString().substr(0, 4) + " " +  (fecha_arr2.getHours()>9?fecha_arr2.getHours(): "0"+fecha_arr2.getHours()   )+ ":" + (fecha_arr2.getMinutes()>9?fecha_arr2.getMinutes(): "0"+fecha_arr2.getMinutes() ); //"2020-05-01 10:00" ;//
+         //var encabezado  ="<table width='100%'   ><tr height='15%'>  <td colspan='2' width='70%'><font face='Arial' size='3'>REPORTE ESTATUS ORDEN DE SERVICIO (O.S.) / PRÓXIMOS SERVICIOS</font></td> <td  aling='right'> <div style='text-align: right;'> <img src='/logo.png' width='40%' max-height='15%' alt='Logo Kananfleet'></div> </td> </tr></table>";
+         //var piepagina  ="<table  style='font-family:Arial, Courier, monospace; font-size:50%' ><tr height='15%'>  <td   >Aministrador de Flotillas Kananfleet<br>Powered by Etecno</td><td  width='30%'>&nbsp;</td><td width='30%' aling='right'>   </td> </tr></table>";  
+         vm.tablaaimprimir =  " <b>Folio: </b><br>" + vm.objServiciosSeleccionados[i].FolioOrden + "<br>" +
+                      "<b>Vehículo/Mantenible:</b><br>"  +
+                      vm.objServiciosSeleccionados[i].mantenible_nombre + "<br>" +
+                      "<b>Taller interno:</b> <br>" +                      
+                      (vm.objServiciosSeleccionados[i].TallerInterno=="1"?"SI":"NO") + " <br>" +
+                       "<b>Taller externo:</b> <br>" +                      
+                      (vm.objServiciosSeleccionados[i].TallerInterno=="0"?"SI":"NO") + " <br>" +
+                      proveedor +
+                      "<b>Rutina:</b> <br>" +                       
+                      vm.objServiciosSeleccionados[i].nombre_rutina + "<br>" + 
+                      "<b>Sucursal:</b> <br>" + 
+                      vm.objServiciosSeleccionados[i].sucursal_nombre + "<br>" + 
+                      "<b>Estatus de la Orden:</b> <br>" + 
+                      vm.objServiciosSeleccionados[i].estatusOrden + "<br>" + 
+                      "<b>F. Recepción:</b> <br>" + 
+                      HoraInicioDisp + " <br>" +
+                      "<b>F. Salida:</b> <br>" +                      
+                      //vm.objServiciosSeleccionados[i].FechaSAlida.toISOString().substr(0, 10) + " " +  (vm.objServiciosSeleccionados[i].FechaSAlida.getHours()>9?vm.objServiciosSeleccionados[i].FechaSAlida.getHours(): "0"+vm.objServiciosSeleccionados[i].FechaSAlida.getHours()   )+ ":" + vm.objServiciosSeleccionados[i].FechaSAlida.getMinutes() + "<br>" + 
+                      HoraFinDisp + " <br>" +
+                      "<b>Observaciones:</b> <br>" +                      
+                      vm.objServiciosSeleccionados[i].Observaciones + " <br>" +
+                      "<table > <tr> <td>" +
+                      "<br> <b>Refacciones/Repuestos: </b> <br>" + 
+                      " </td></tr>  <tr> <td> " +
+                      "<table  border='1' cellspacing='0' cellpadding='1' align='left'> <tr bgcolor='" + color + "'  > <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+refacciones+"</table>" + 
+                      " </td></tr>  <tr> <td> " +
+                      "<br> <b>Herramientas: </b> <br>" +
+                      " </td></tr>  <tr> <td> " + 
+                      "<table border='1' cellspacing='0' cellpadding='1' align='left' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+herramienta+"</table>" +
+                      " </td></tr>  <tr> <td> " +
+                      "<br>   <b>Mecánicos: </b> <br>" +
+                      " </td></tr>  <tr> <td> " + 
+                      "<table border='1' cellspacing='0' cellpadding='1' align='left' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Nombre Mecánico </th> </tr>"+mecanicos+"</table>" +
+                      " </td></tr>  </table> " +
+                      "<table> <tr bgcolor='" + color + "'> <td background="+color+" > " + etiquetaestatus +"  </td> </tr> </table>"
+              vm.generapaginaos(vm.tablaaimprimir);
+              formatoPrint += vm.tablaaimprimir;                         
+
+          }
+        }
+      
+ 
+       // vm.selectedEvent.details
+        const newWin = window.open('')
+      newWin.document.write(formatoPrint)
+      //newWin.document.write(vm.selectedEvent.details);
+      setTimeout(function () {
+        newWin.print()
+        newWin.close()
+      }, 550)
+    },
+    generapaginaos({event})
+    {
+      let vm = this;
+      var encabezado  ="<table width='100%'   ><tr height='15%'>  <td colspan='2' width='70%'><font face='Arial' size='3'>REPORTE ESTATUS ORDEN DE SERVICIO (O.S.) / PRÓXIMOS SERVICIOS</font></td> <td  aling='right'> <div style='text-align: right;'> <img src='/logo.png' width='40%' max-height='15%' alt='Logo Kananfleet'></div> </td> </tr></table>";
+      var piepagina  ="<table  style='font-family:Arial, Courier, monospace; font-size:50%' ><tr height='15%'> <td><img src='/logokf.png' width='15px' height='15px'></td> <td   >  Aministrador de Flotillas Kananfleet<br>Powered by Etecno</td><td  width='30%'>&nbsp;</td><td width='30%' aling='right'>   </td> </tr></table>";  
+
+      var header =  "<div style='height:1000px'>" +   
+                      "<table width='100%' height='1000px'> " + 
+                      "<tr> <td >" + encabezado + " <tr></td> " +
+                      "<tr> <td >"
+
+      var footer = "</td></tr>" +
+                      " <tr><td>  </td> </tr>" +
+                      " </table> <br> " + piepagina + "  </div>"    
+      vm.tablaaimprimir = header + vm.tablaaimprimir + footer;
+      console.log(vm.tablaaimprimir);
+      
+    },
     pdf() {
       let vm = this
       console.log('function: PDF().')
@@ -786,7 +1769,7 @@ export default {
       }
       var headerTable = ''
       var detalle = ''
-      var nombre = 'REPORTE ESTATUS O.S./PRÓXIMOS SERVICIOS'
+      var nombre = 'REPORTE ESTATUS O.S. / PRÓXIMOS SERVICIOS'
       if(vm.events.length > 0) {
         headerTable += '' +
 /**/          '<td style="border: 1px solid #ddd;">FOLIO</td>' +
@@ -796,28 +1779,7 @@ export default {
           '<td style="border: 1px solid #ddd;">ESTATUS</td>' +
           '<td style="border: 1px solid #ddd;">INICIO</td>' +
           '<td style="border: 1px solid #ddd;">FIN</td>';
-          /*"<b>Folio: </b><br>" +vm.rowData[i].FolioOrden + "<br>" +
-                      "<b>Vehículo/Mantenible:</b><br>"  +
-                       vm.rowData[i].mantenible_nombre + 
-                      "<br><b>Rutina:</b> <br>" + 
-                      vm.rowData[i].nombre_rutina + "<br>" + 
-                      "<b>Sucursal:</b> <br>" + 
-                      vm.rowData[i].sucursal_nombre + "<br>" + 
-                      "<b>Estatus de la Orden:</b> <br>" + 
-                      vm.rowData[i].estatusOrden + "<br>" + 
-                      "<b>F. Recepción:</b> <br>" + 
-                      HoraInicio + " <br>" +
-                      "<b>F. Salida:</b> <br>" +
-                      //vm.rowData[i].FechaSAlida.toISOString().substr(0, 10) + " " +  (vm.rowData[i].FechaSAlida.getHours()>9?vm.rowData[i].FechaSAlida.getHours(): "0"+vm.rowData[i].FechaSAlida.getHours()   )+ ":" + vm.rowData[i].FechaSAlida.getMinutes() + "<br>" + 
-                      HoraFin + " <br>" +
-                      "<br> <b>Refacciones: </b> <br>" + 
-                      "<table  border='1' cellspacing='0' cellpadding='1' align='center'> <tr bgcolor='" + color + "'  > <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+refacciones+"</table>" + 
-                      "<br> <b>Herramientas: </b> <br>" + 
-                      "<table border='1' cellspacing='0' cellpadding='1' align='center' > <tr bgcolor='" + color + "'> <th style='color:#FFFFFF';>Cant. </th> <th style='color:#FFFFFF';>Cod. </th> <th style='color:#FFFFFF';>Desc. </th></tr>"+herramienta+"</table>"
-         */ 
-
-
-
+         
         for(var x = 0; x < vm.rowData.length; x++) {
           var fecha_arr = new Date(vm.rowData[x].FechaRecepcion)
           var fecha_arr2 = new Date(vm.rowData[x].FechaSalida)
@@ -866,17 +1828,26 @@ export default {
     },
     closeDetalle() {
       let vm = this
+      let resp = confirm("¿Desea imprimir la Orden de Servicio?")
+      console.log(resp);
+      console.log(vm.selectedEvent.details);
+      console.log("Preguntar si quiere imprimir");
       console.log('function: closeDetalle(). ')
       vm.selectedOpen = false
-      console.log(vm.selectedOpen)
+      //console.log(vm.selectedOpen)
+      if(resp)
+      {
+        vm.pdfseleccionado();
+      }
     },
     showEvent ({ nativeEvent, event }) {
-      console.log('showEvent')
+      let vm = this;
       const open = () => {
         this.selectedEvent = event
         this.selectedElement = nativeEvent.target
         // eslint-disable-next-line no-return-assign
         setTimeout(() => this.selectedOpen = true, 10)
+        vm.tablaaimprimir = event.details;
       }
 
       if (this.selectedOpen) {
@@ -968,9 +1939,11 @@ export default {
     }
   },
   mounted () {
-    const vm = this
+    
+    let vm = this
     this.$refs.calendar.checkChange()
     vm.getDataArr()
+    let variableX = this;
   },
   beforeMount () {
     this.events = [
@@ -1045,9 +2018,9 @@ export default {
       {estatus_id:0,estastus_nombre:'Todo'},
       {estatus_id:1,estastus_nombre:'O.S. Programada'},
       {estatus_id:2,estastus_nombre:'O.S. En Proceso (En tiempo)'},
-      {estatus_id:3,estastus_nombre:'O.S. En Proceso (Con retraso)'},
-      {estatus_id:4,estastus_nombre:'O.S. Pasada de fecha'},
-      {estatus_id:5,estastus_nombre:'O.S. Finalizado (En Tiempo y Forma)'},
+      {estatus_id:5,estastus_nombre:'O.S. En Proceso (Con retraso)'},
+      {estatus_id:3,estastus_nombre:'O.S. Pasada de fecha'},
+      {estatus_id:4,estastus_nombre:'O.S. Finalizado (En Tiempo y Forma)'},
     ]
 
     this.dataSelectMante = [
@@ -1063,4 +2036,11 @@ export default {
     ]
   }
 }
+ /*
+function funcionfelipe()
+{
+  variableX.pdf;
+ 
+}*/
 </script>
+<!--<input type="button" @click="funcionEjy" value="hola felipe" > -->

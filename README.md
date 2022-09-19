@@ -20,3 +20,7 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+https://w2.administraflotilla.com/reportes/ProximosServicios/?id=1605
+http://192.168.1.105:8080/reportes/ProximosServicios/?id=1605
+http://webapiandroidtest.administraflotilla.com/

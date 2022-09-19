@@ -1,0 +1,114 @@
+[
+  {
+    "name": "kananfleet-Inspeccion",
+    "path": "/kananfleet/Inspeccion",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\kananfleet\\\\Inspeccion\\\\index.vue",
+    "chunkName": "pages/kananfleet/Inspeccion/index",
+    "_name": "_6ebf7bdc"
+  },
+  {
+    "name": "kananfleet-Recepcion",
+    "path": "/kananfleet/Recepcion",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\kananfleet\\\\Recepcion\\\\index.vue",
+    "chunkName": "pages/kananfleet/Recepcion/index",
+    "_name": "_55c48e53"
+  },
+  {
+    "name": "kananfleet-recepcionTaller",
+    "path": "/kananfleet/recepcionTaller",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\kananfleet\\\\recepcionTaller.vue",
+    "chunkName": "pages/kananfleet/recepcionTaller",
+    "_name": "_26145b69"
+  },
+  {
+    "name": "reportes-ConsumoRefacciones",
+    "path": "/reportes/ConsumoRefacciones",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\ConsumoRefacciones\\\\index.vue",
+    "chunkName": "pages/reportes/ConsumoRefacciones/index",
+    "_name": "_b35e2074"
+  },
+  {
+    "name": "reportes-CostoMensual",
+    "path": "/reportes/CostoMensual",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\CostoMensual\\\\index.vue",
+    "chunkName": "pages/reportes/CostoMensual/index",
+    "_name": "_375a4127"
+  },
+  {
+    "name": "reportes-CostosMantenimiento",
+    "path": "/reportes/CostosMantenimiento",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\CostosMantenimiento\\\\index.vue",
+    "chunkName": "pages/reportes/CostosMantenimiento/index",
+    "_name": "_2da47b97"
+  },
+  {
+    "name": "reportes-DisponibilidadEquipo",
+    "path": "/reportes/DisponibilidadEquipo",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\DisponibilidadEquipo\\\\index.vue",
+    "chunkName": "pages/reportes/DisponibilidadEquipo/index",
+    "_name": "_517ef12e"
+  },
+  {
+    "name": "reportes-MeanTimeToRepair",
+    "path": "/reportes/MeanTimeToRepair",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\MeanTimeToRepair\\\\index.vue",
+    "chunkName": "pages/reportes/MeanTimeToRepair/index",
+    "_name": "_08a6dc8e"
+  },
+  {
+    "name": "reportes-ProximosServicios",
+    "path": "/reportes/ProximosServicios",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\ProximosServicios\\\\index.vue",
+    "chunkName": "pages/reportes/ProximosServicios/index",
+    "_name": "_7996b6a2"
+  },
+  {
+    "name": "reportes-RendimientoCombustible",
+    "path": "/reportes/RendimientoCombustible",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\RendimientoCombustible\\\\index.vue",
+    "chunkName": "pages/reportes/RendimientoCombustible/index",
+    "_name": "_766fdb3e"
+  },
+  {
+    "name": "reportes-TiempoPromedioFallas",
+    "path": "/reportes/TiempoPromedioFallas",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\TiempoPromedioFallas\\\\index.vue",
+    "chunkName": "pages/reportes/TiempoPromedioFallas/index",
+    "_name": "_6830c2da"
+  },
+  {
+    "name": "reportes-TiempoPromedioReparaciones",
+    "path": "/reportes/TiempoPromedioReparaciones",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\TiempoPromedioReparaciones\\\\index.vue",
+    "chunkName": "pages/reportes/TiempoPromedioReparaciones/index",
+    "_name": "_e7a86c3e"
+  },
+  {
+    "name": "reportes-UsoPorHora",
+    "path": "/reportes/UsoPorHora",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\UsoPorHora\\\\index.vue",
+    "chunkName": "pages/reportes/UsoPorHora/index",
+    "_name": "_644d3e20"
+  },
+  {
+    "name": "reportes-ProximosServicios-index_entregado",
+    "path": "/reportes/ProximosServicios/index_entregado",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\ProximosServicios\\\\index_entregado.vue",
+    "chunkName": "pages/reportes/ProximosServicios/index_entregado",
+    "_name": "_7d909ee6"
+  },
+  {
+    "name": "reportes-ProximosServicios-index_prueba",
+    "path": "/reportes/ProximosServicios/index_prueba",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\reportes\\\\ProximosServicios\\\\index_prueba.vue",
+    "chunkName": "pages/reportes/ProximosServicios/index_prueba",
+    "_name": "_d2402f84"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\dev\\\\Projects\\\\checklist_kananfleet\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_8580cc6c"
+  }
+]
